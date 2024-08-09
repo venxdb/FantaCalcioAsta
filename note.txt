@@ -1,0 +1,5 @@
+SUPER USER
+
+-  username: admin
+-  email address: st.zantedeschi@gmail.com
+-  password: astafanta
