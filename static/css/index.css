@@ -1,0 +1,101 @@
+html {
+    font-size: 32px;
+    box-sizing: border-box;
+    font-family: 'Open-Sans',sans-serif;
+    font-weight: 800;
+  }
+  
+  body {
+    margin: 0; 
+    background-image: url("../img/green.jpg");
+    
+  }
+ 
+  .login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgba(221, 224, 229, 0.1);
+    color: #c9d1d9;
+  }
+
+
+  .login-page-wrapper {
+    width: 50%; 
+    max-width: 1000px;
+    padding: 2rem; 
+    background: rgba(22, 27, 34, 0.7);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+    height: 80%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box; 
+  }
+    #logo {
+    position: absolute;
+    top: 10px; /* Spazio dal bordo superiore del contenitore padre */
+    left: 10px; /* Spazio dal bordo sinistro del contenitore padre */
+    width: 150px; /* Dimensione del logo */
+    height: 150px; /* Dimensione del logo */
+    z-index: 10; /* Assicura che il logo sia sopra altri contenuti */
+}
+
+  
+  .login-page header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.25rem; 
+    
+  }
+  
+  .rlp-username,
+  .rlp-password {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+    margin-bottom: 1rem; 
+  }
+  
+  .rlp-username input,
+  .rlp-password input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #30363d;
+    border-radius: 0.25rem; 
+    background: rgba(13, 17, 23, 0.5);
+    color: #c9d1d9;
+     
+  }
+  
+  .rlp-username,
+  .rlp-password {
+    padding: 0.75rem; 
+    border-radius: 0.25rem; 
+    background: rgba(13, 17, 23, 0.5);
+    box-sizing: border-box; 
+  }
+  
+  button {
+    width: 100%; 
+    padding: 0.75rem; 
+    border: none;
+    border-radius: 0.25rem; 
+    background: #238636;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: auto; 
+    font-family: 'Open-Sans', sans-serif; 
+    font-weight: 600;
+    font-size: 23px;
+  }
+  
+  button:hover {
+    background-color: #2ea043;
+  }
+  
