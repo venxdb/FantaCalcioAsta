@@ -39,3 +39,28 @@ class PlayerQuotesFile(models.Model):
             old_file.delete()
         
         super().save(*args, **kwargs)
+
+
+"""
+    Modello per statistiche transfermarkt
+"""
+
+class FullStatistics(models.Model):
+
+    id_player               = models.ForeignKey(Player_Quotes, on_delete=models.CASCADE, related_name='statistics')
+    stagione                = models.CharField(max_length = 250)
+    club                    = models.CharField(max_length = 250)
+    presenze                = models.IntegerField()
+    goal                    = models.IntegerField()
+    assist                  = models.IntegerField()
+    autogoal                = models.IntegerField()
+    subentrato              = models.IntegerField()
+    sostituito              = models.IntegerField()
+    ammonizioni             = models.IntegerField()
+    espulsioni_doppiogiallo = models.IntegerField()
+    espulsioni_dirette      = models.IntegerField()
+    rigori_segnati          = models.IntegerField()
+    minuti_pergoal          = models.IntegerField()
+    minuti_giocati          = models.IntegerField()
+    goal_subiti             = models.IntegerField(default = 0)
+    clean_sheets            = models.IntegerField(default = 0)

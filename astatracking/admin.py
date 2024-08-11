@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.core.management import call_command
 
-from .models import Player_Quotes, PlayerQuotesFile
+from .models import Player_Quotes, PlayerQuotesFile, FullStatistics
 
 
 # Register your models here.
@@ -29,3 +29,23 @@ class PlayerQuotesAdmin(admin.ModelAdmin):
 @admin.register(PlayerQuotesFile)
 class PlayerQuotesFileAdmin(admin.ModelAdmin):
     list_display = ("file", "uploaded_at")
+
+
+@admin.register(FullStatistics)
+class FullStatisticsAdmin(admin.ModelAdmin):
+
+    list_display = ["id_player", "stagione", "club", "presenze","goal", "assist", "autogoal", "subentrato", "sostituito", 
+                    "ammonizioni", "espulsioni_doppiogiallo", "espulsioni_dirette", "rigori_segnati", "minuti_pergoal",
+                    "minuti_giocati"]
+    
+    actions      = ["update_statistics_ws"]
+
+    @admin.action(description = "Aggiorna statistiche Transfermarkt dei giocatori")
+    def update_statistics_ws(self, request, queryset = None):
+        call_command("update_statistics_quotes")
+        self.message_user("request", "Statistiche transfermarkt caricate. Visualizza log per vedere se alcune statistiche non sono state caricate")
+
+    update_statistics_ws.short_description = "Aggiorna statistiche Transfermarkt"
+
+
+
