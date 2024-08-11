@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from astatracking.utils.player_statistics_ws import get_statistics_player, cleaning_transfermarkt_data
 from astatracking.models import Player_Quotes, FullStatistics
+import pandas as pd
 
 
 class Command(BaseCommand):
@@ -21,7 +22,10 @@ class Command(BaseCommand):
         for player_id, player_instance in player_dict.items():
             player_name = player_instance.nome
             df_statistics = get_statistics_player(player_name)
-            df_player     = cleaning_transfermarkt_data(df_statistics)
+            try: 
+                df_player     = cleaning_transfermarkt_data(df_statistics)
+            except Exception:
+                df_player     = pd.DataFrame()
 
             df_player     = df_player[df_player.Competizione.isin(competizioni)]
 
