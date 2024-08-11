@@ -21,21 +21,21 @@ class Command(BaseCommand):
         # web scraping for statistics
         for player_id, player_instance in player_dict.items():
             player_name = player_instance.nome
-            df_statistics = get_statistics_player(player_name)
-            try: 
-                df_player     = cleaning_transfermarkt_data(df_statistics)
-            except Exception:
-                df_player     = pd.DataFrame()
-
-            df_player     = df_player[df_player.Competizione.isin(competizioni)]
-
-            df_player     = df_player.drop(columns = ["Appearances"])
-
+            
             column_names = ["Stagione", "Competizione", "Club", "Convocazioni", "Presenze", "Goals",
                     "Assists", "Autogoal",
                     "Subentrato", "Sostituito", "Ammonito", "Espulso Doppio Giallo", "Espulsione diretta",
                     "Goal su rigore",
                     "Minuti per Goal", "Minuti Giocati", "Goal subiti", "Clean Sheets"]
+            
+            try: 
+                df_statistics = get_statistics_player(player_name)
+                df_player     = cleaning_transfermarkt_data(df_statistics)
+            except Exception:
+                df_player     = pd.DataFrame(columns=column_names)
+
+
+            
             
             dict_rename = {
                 "Own Goals": "Autogoal",
@@ -51,6 +51,10 @@ class Command(BaseCommand):
             }
 
             df_player = df_player.rename(columns= dict_rename)
+
+            df_player     = df_player[df_player.Competizione.isin(competizioni)]
+
+            df_player     = df_player.drop(columns = ["Appearances"])
 
             for c in column_names:
                 if c not in df_player.columns:
