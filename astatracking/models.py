@@ -10,3 +10,4 @@ class Player_Quotes(models.Model):
     squadra             = models.CharField(max_length = 200)
     quotazione_attuale  = models.IntegerField()
     quotazione_iniziale = models.IntegerField()
+
