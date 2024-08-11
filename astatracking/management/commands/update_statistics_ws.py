@@ -31,6 +31,7 @@ class Command(BaseCommand):
             try: 
                 df_statistics = get_statistics_player(player_name)
                 df_player     = cleaning_transfermarkt_data(df_statistics)
+                df_player     = df_player.drop(columns = ["Appearances"])
             except Exception:
                 df_player     = pd.DataFrame(columns=column_names)
 
@@ -54,7 +55,6 @@ class Command(BaseCommand):
 
             df_player     = df_player[df_player.Competizione.isin(competizioni)]
 
-            df_player     = df_player.drop(columns = ["Appearances"])
 
             for c in column_names:
                 if c not in df_player.columns:
