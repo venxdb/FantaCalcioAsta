@@ -51,8 +51,27 @@ def get_statistics_player(player_name):
     detailed_stats_link = get_detailed_statistics_link(player_name, headers)
     response            = requests.get(detailed_stats_link, headers = headers)
     soup                = BeautifulSoup(response.text, 'html.parser')
-    table_stats         = soup.find("table", class_ = "items")
 
+    thead               = soup.find('thead')
+    headers             = thead.find_all('th')
+    
+    titles = []
+    for header in headers:
+    # Trova l'elemento <a> dentro il <th>
+        a_tag = header.find('a')
+        if a_tag:
+            # Verifica se l'attributo 'title' è presente
+            title = a_tag.get('title')
+            if title:
+                titles.append(title)
+            else:
+                # Verifica se ci sono titoli all'interno di <span> in <a>
+                span_tag = a_tag.find('span', {'title': True})
+                if span_tag:
+                    titles.append(span_tag.get('title'))
+
+
+    table_stats         = soup.find("table", class_ = "items")
     data = []
     for row in table_stats.find_all('tr')[1:]:
         row_data = [get_cell_data(td) for td in row.find_all('td')]
@@ -60,13 +79,11 @@ def get_statistics_player(player_name):
             row_data.pop(1)
             data.append(row_data)
     
-    column_names = ["Stagione", "Competizione", "Club", "Convocazioni", "Presenze", "Punti per match", "Goals",
-                    "Assists", "Autogoal",
-                    "Subentrato", "Sostituito", "Ammonito", "Espulso Doppio Giallo", "Espulsione diretta",
-                    "Gol su rigore",
-                    "Minuti per Goal", "Minuti Giocati"]
+    column_names = ["Stagione", "Competizione", "Club", "Convocazioni", "Presenze"] + titles
     
-    df           = pd.DataFrame(data, columns = column_names)
+    df          = pd.DataFrame(data, columns = column_names)
+
+
     df.insert(0, "Giocatore", player_name)
     
     return df
@@ -75,15 +92,33 @@ def cleaning_transfermarkt_data(dataframe: pd.DataFrame):
 
     not_int_cols = ["Giocatore", "Stagione", "Competizione", "Club"]
     for col in dataframe.columns:
+        print(col)
         if col not in not_int_cols:
             dataframe[col] = dataframe[col].apply(lambda x: x.replace("-", "0").replace("'", ""))
             if col != "Punti per match":
-                dataframe[col] = dataframe[col].apply(lambda x: x.replace(".", ""))
+                dataframe[col] = dataframe[col].apply(lambda x: x.replace(".", "") if "." in x else x.replace(",", ""))
                 dataframe[col] = dataframe[col].astype(int)
             else:
                 dataframe[col] = dataframe[col].apply(lambda x: x.replace(",", "."))
                 dataframe[col] = dataframe[col].astype(float)
 
     return dataframe
+
+
+def cleaning_transfermarkt_data(dataframe: pd.DataFrame):
+
+    not_int_cols = ["Giocatore", "Stagione", "Competizione", "Club"]
+    for col in dataframe.columns:
+        if col not in not_int_cols:
+            dataframe[col] = dataframe[col].apply(lambda x: x.replace("-", "0").replace("'", ""))
+            if col != "Punti per match":
+                dataframe[col] = dataframe[col].apply(lambda x: x.replace(".", "") if "." in x else x.replace(",", ""))
+                dataframe[col] = dataframe[col].astype(int)
+            else:
+                dataframe[col] = dataframe[col].apply(lambda x: x.replace(",", "."))
+                dataframe[col] = dataframe[col].astype(float)
+
+    return dataframe
+
 
 

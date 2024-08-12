@@ -1,0 +1,146 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background-image: url("../img/sports.png");
+    font-family: 'Open-Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    position: relative; 
+}
+
+h1 {
+    color: darkgreen;
+    font-size: 1.5em; 
+    margin: 20px 0; 
+    position: absolute; 
+    top: 20px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    width: calc(100% - 40px); 
+}
+h2 {
+    color: green;
+}
+.timeline-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; 
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    margin-top: 60px; 
+}
+
+.timeline-step {
+    flex: 1; 
+    background-color: #fff;
+    padding: 20px; 
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 22px;
+    text-align: center;
+    margin: 0 10px;
+    box-sizing: border-box;
+    min-height: 200px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.timeline-step h2 {
+    font-size: 36px;
+    margin-bottom: 15px; 
+}
+
+.timeline-step p {
+    margin-bottom: 20px; 
+}
+
+.timeline-step button {
+    padding: 15px 30px; 
+    border: none;
+    background-color: darkgreen;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    font-size: 22px; 
+    align-self: center; 
+    font-family: 'Open-Sans', sans-serif;
+}
+
+.timeline-step button:hover {
+    background-color: green;
+}
+
+/* Stili per schermi piccoli */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.2em; 
+        top: 15px; 
+    }
+
+    .timeline-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px; 
+        margin-top: 80px; 
+    }
+
+    .timeline-step {
+        width: 90%; 
+        margin-bottom: 20px; 
+        padding: 15px; 
+    }
+
+    .timeline-step h2 {
+        font-size: 28px;
+    }
+
+    .timeline-step p {
+        font-size: 18px;
+    }
+
+    .timeline-step button {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 0.8em; 
+        top: 1px; 
+    }
+
+    .timeline-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        margin-top: 70px; 
+    }
+
+    .timeline-step {
+        width: 90%; 
+        margin-bottom: 20px; 
+        padding: 20px;
+    }
+
+    .timeline-step h2 {
+        font-size: 24px;
+    }
+
+    .timeline-step p {
+        font-size: 18px;
+    }
+
+    .timeline-step button {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+}

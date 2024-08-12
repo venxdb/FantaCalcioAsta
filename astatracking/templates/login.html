@@ -1,0 +1,43 @@
+<!-- login.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FantaCorrubbio</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{% static 'img/logo.svg' %}" alt="logo" id="logo">
+    </div>
+    <div class="login-page">
+        <div class="login-page-wrapper">
+            <article>
+                <header>
+                    <div>FAI IL LOGIN DIO BASTARDO</div>
+                </header>
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <label class="rlp-username">
+                        <input type="text" placeholder="Username" name="username" />
+                    </label>
+                    <label class="rlp-password">
+                        <input type="password" placeholder="Password" name="password" />
+                    </label>
+                    <section>
+                        <button type="submit">ENTRA DIOBOIA</button>
+                    </section>
+                    {% if error %}
+                        <p>{{ error }}</p> <!-- Mostra errore di login se presente -->
+                    {% endif %}
+                </form>
+            </article>
+            <div class="login-page-drops">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
