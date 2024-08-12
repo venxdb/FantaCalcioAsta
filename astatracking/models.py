@@ -1,5 +1,6 @@
 from django.db import models
 import os
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -64,3 +65,21 @@ class FullStatistics(models.Model):
     minuti_giocati          = models.IntegerField()
     goal_subiti             = models.IntegerField(default = 0)
     clean_sheets            = models.IntegerField(default = 0)
+
+
+"""
+    Modello per le squadre dei partecipanti
+"""
+
+class Teams(models.Model):
+
+    id            = models.AutoField(primary_key = True)
+    allenatore    = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "teams")
+    nome_squadra  = models.CharField(max_length = 250)
+    
+    def __str__(self):
+        return f"{self.nome_squadra} (Allenatore: {self.allenatore.username})"
+    
+    class Meta:
+        verbose_name        = "Team"
+        verbose_name_plural = "Teams"

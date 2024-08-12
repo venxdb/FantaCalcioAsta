@@ -1,8 +1,12 @@
 from django.contrib import admin
 from django.core.management import call_command
+from django import forms
 
-from .models import Player_Quotes, PlayerQuotesFile, FullStatistics
 
+from .models import Player_Quotes, PlayerQuotesFile, FullStatistics, Teams
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # Register your models here.
 @admin.register(Player_Quotes)
@@ -47,5 +51,26 @@ class FullStatisticsAdmin(admin.ModelAdmin):
 
     update_statistics_ws.short_description = "Aggiorna statistiche Transfermarkt"
 
+class UserModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return f"{obj.first_name} {obj.last_name}".strip() if obj.first_name or obj.last_name else obj.username
 
 
+@admin.register(Teams)
+class TeamsAdmin(admin.ModelAdmin):
+
+    list_display  = ["nome_squadra", "get_allenatore_full_name"]
+
+    search_fields = ["nome_squadra", "allenatore__first_name", "allenatore__last_name"]
+
+    def get_allenatore_full_name(self, obj):
+
+        return f"{obj.allenatore.first_name} {obj.allenatore.last_name}".strip()
+    
+    get_allenatore_full_name.short_description = "FantaAllenatore"
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "allenatore":
+            # Usa la classe personalizzata per il campo di scelta
+            return UserModelChoiceField(queryset=User.objects.all().order_by('first_name', 'last_name'))
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)

@@ -3,3 +3,14 @@ SUPER USER
 -  username: admin
 -  email address: st.zantedeschi@gmail.com
 -  password: astafanta
+
+
+
+UTENTI BUTEI:
+
+- marcozane95 marco456
+- edodile     edo789123
+- lorienzo    lore7891
+- bottu       ultimo99
+- civetta     cive1234
+- drex95      francisco123
