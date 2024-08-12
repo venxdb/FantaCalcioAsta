@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import User, Player_Quotes, Acquisti
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Sum
 
 def login_view(request):
     if request.method == 'POST':
@@ -57,3 +58,21 @@ def acquisti_view(request):
 
     allenatori = User.objects.all()
     return render(request, 'acquisti.html', {'allenatori': allenatori})
+
+@login_required
+def budget_view(request):
+
+    allenatori = User.objects.all()
+    # raggruppo acquisti per allenatore
+    acquisti   = Acquisti.objects.values('allenatore').annotate(spesa_totale = Sum('crediti'))
+
+
+    budget_per_allenatore = {}
+    for a in acquisti:
+        allenatore_id = a["allenatore"]
+        spesa_totale  = a['spesa_totale']
+        allenatore    =  User.objects.get(id = allenatore_id)
+
+        budget_per_allenatore[allenatore] = 350 - spesa_totale
+
+    return render(request, "budget.html", {'budget_per_allenatore': budget_per_allenatore})
