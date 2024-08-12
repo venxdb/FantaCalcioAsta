@@ -3,7 +3,7 @@ from django.core.management import call_command
 from django import forms
 
 
-from .models import Player_Quotes, PlayerQuotesFile, FullStatistics, Teams
+from .models import Player_Quotes, PlayerQuotesFile, FullStatistics, Teams, Acquisti
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -74,3 +74,39 @@ class TeamsAdmin(admin.ModelAdmin):
             # Usa la classe personalizzata per il campo di scelta
             return UserModelChoiceField(queryset=User.objects.all().order_by('first_name', 'last_name'))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+class PlayerQuotesModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.nome  # Mostra il nome del giocatore nel widget di selezione
+
+
+@admin.register(Acquisti)
+class AcquistiAdmin(admin.ModelAdmin):
+
+    list_display        = ["get_allenatore_full_name", "get_giocatore_nome", "crediti"]
+
+    autocomplete_fields = ["giocatore", "allenatore"]
+
+    def get_allenatore_full_name(self, obj):
+
+        return f"{obj.allenatore.first_name} {obj.allenatore.last_name}".strip()
+    
+    get_allenatore_full_name.short_description = "FantaAllenatore"
+
+    def get_giocatore_nome(self, obj):
+
+        return obj.giocatore.nome
+    
+    get_giocatore_nome.short_description = "Giocatore"
+
+
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "allenatore":
+            return UserModelChoiceField(queryset=User.objects.all().order_by('first_name', 'last_name'))
+        
+        if db_field.name == "giocatore":
+            return PlayerQuotesModelChoiceField(queryset = Player_Quotes.objects.all().order_by('nome'))
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+

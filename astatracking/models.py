@@ -83,3 +83,18 @@ class Teams(models.Model):
     class Meta:
         verbose_name        = "Team"
         verbose_name_plural = "Teams"
+
+
+"""
+    Modello per gli acquisti
+"""
+
+class Acquisti(models.Model):
+
+    id         = models.AutoField(primary_key = True)
+    allenatore = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "acquisti")
+    giocatore  = models.ForeignKey(Player_Quotes, on_delete = models.CASCADE, related_name = "acquisti")
+    crediti    = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.giocatore.nome} - {self.allenatore.username} - {self.crediti}"

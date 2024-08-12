@@ -2,6 +2,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from .models import User, Player_Quotes, Acquisti
+from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
 
 def login_view(request):
     if request.method == 'POST':
@@ -28,3 +31,29 @@ def menu_view(request):
 def index_view(request):
     return redirect('login')  # Reindirizza alla pagina di login dalla radice
 
+
+@login_required
+def acquisti_view(request):
+    if request.method == 'POST':
+        allenatore_id = request.POST.get('allenatore')
+        giocatore_id = request.POST.get('giocatore')
+        crediti = request.POST.get('crediti')
+
+        try:
+            allenatore = User.objects.get(id=allenatore_id)
+            giocatore = Player_Quotes.objects.get(id=giocatore_id)
+            acquisto = Acquisti(allenatore=allenatore, giocatore=giocatore, crediti=crediti)
+            acquisto.save()
+            return JsonResponse({'success': True, 'message': 'Acquisto salvato con successo!'}) # Redirige a una pagina di successo
+        except ObjectDoesNotExist:
+            return render(request, 'acquisti.html', {'error': 'Allenatore o giocatore non trovato'})
+    
+    # Gestione delle richieste GET
+    if request.is_ajax() and request.GET.get('action') == 'autocomplete':
+        query = request.GET.get('q', '')
+        giocatori = Player_Quotes.objects.filter(nome__icontains=query)
+        results = [{'id': giocatore.id, 'text': giocatore.nome} for giocatore in giocatori]
+        return JsonResponse({'results': results})
+
+    allenatori = User.objects.all()
+    return render(request, 'acquisti.html', {'allenatori': allenatori})
