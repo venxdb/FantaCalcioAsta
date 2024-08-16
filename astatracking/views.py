@@ -85,10 +85,11 @@ def budget_view(request):
                       'utente_loggato': request.user})
 
 @login_required
-def rose_view(): 
+def rose_view(request): 
 
     allenatori = User.objects.all()
     
+    rose_dict = {}
     for a in allenatori:
         acquisti = Acquisti.objects.filter(allenatore = a)
         
@@ -109,6 +110,19 @@ def rose_view():
             else:
                 attaccanti.append(giocatore.nome)
 
-        
+        allenatore_dict = {}
+        allenatore_dict["Portieri"]       = portieri
+        allenatore_dict["Difensori"]      = difensori
+        allenatore_dict["Centrocampisti"] = centrocampisti
+        allenatore_dict["Attaccanti"]     = attaccanti
+
+        rose_dict[a] = allenatore_dict
+
+    return render(request, 'rose.html',
+                  {
+                      'rose': rose_dict,
+                      'utente_loggato': request.user
+                  })
+
 
             
