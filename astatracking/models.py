@@ -98,3 +98,33 @@ class Acquisti(models.Model):
 
     def __str__(self):
         return f"{self.giocatore.nome} - {self.allenatore.username} - {self.crediti}"
+    
+    @classmethod
+    def crea_acquisti_pertutti_utenti(cls):
+
+        ruoli = {
+                    "Portiere": 3, 
+                    "Difensore": 8,
+                    "Centrocampista": 8,
+                    "Attaccante": 6
+                }
+
+        utenti = User.objects.all()
+
+        for utente in utenti:
+            if utente != "admin":
+                print(f"Inserimento acquisti per {utente.username}")
+
+                for ruolo, num_giocatori in ruoli.items():
+                    giocatori = Player_Quotes.objects.filter(ruolo_desc = ruolo)
+
+                    giocator_scelti = random.sample(list(giocatori),num_giocatori)
+                    print(f"Giocatori scelti: {giocator_scelti}")
+
+                    for g in giocator_scelti:
+                        cls.objects.create(
+                            allenatore = utente, 
+                            giocatore = g,
+                            crediti = 10
+                        )
+                print(f"Acquisti completati per {utente.username}")
