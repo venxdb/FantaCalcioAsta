@@ -77,6 +77,6 @@ def budget_view(request):
 
         budget_per_allenatore[allenatore] = 350 - spesa_totale
     
-    budget_per_allenatore = sorted(budget_per_allenatore.items(), key = lambda x: x[1])
+    budget_per_allenatore = sorted(budget_per_allenatore.items(), key = lambda x: x[1], reverse = True)
 
     return render(request, 'budget.html', {'budget_per_allenatore': budget_per_allenatore})
