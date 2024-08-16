@@ -83,3 +83,32 @@ def budget_view(request):
                   {
                       'budget_per_allenatore': budget_per_allenatore,
                       'utente_loggato': request.user})
+
+@login_required
+def rose_view(): 
+
+    allenatori = User.objects.all()
+    
+    for a in allenatori:
+        acquisti = Acquisti.objects.filter(allenatore = a)
+        
+        portieri       = [] 
+        difensori      = []
+        centrocampisti = []
+        attaccanti     = []
+
+        for acq in acquisti:
+            giocatore = acq.giocatore
+            print(f"Giocatore: {giocatore.nome} Giocatore Ruolo: {giocatore.ruolo}")
+            if giocatore.ruolo == "P":
+                portieri.append(giocatore.nome)
+            elif giocatore.ruolo == "D":
+                difensori.append(giocatore.nome)
+            elif giocatore.ruolo == "C":
+                centrocampisti.append(giocatore.nome)
+            else:
+                attaccanti.append(giocatore.nome)
+
+        
+
+            
