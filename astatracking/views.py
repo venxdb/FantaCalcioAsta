@@ -75,4 +75,4 @@ def budget_view(request):
 
         budget_per_allenatore[allenatore] = 350 - spesa_totale
 
-    return render(request, "budget.html", {'budget_per_allenatore': budget_per_allenatore})
+    return render(request, 'budget.html', {'budget_per_allenatore': budget_per_allenatore})
