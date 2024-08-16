@@ -13,8 +13,8 @@
     <h1>Visualizza Budget</h1>
 
     <div class="container">
-        {% for allenatore, budget in budget_per_allenatore.items %}
-            <div class="box">
+        {% for allenatore, budget in budget_per_allenatore %}
+            <div class="box {% if allenatore == utente_loggato %}highlight{% endif %}">
                 <h2>{{ allenatore }}</h2>
                 <p>{{ budget }}</p>
             </div>
