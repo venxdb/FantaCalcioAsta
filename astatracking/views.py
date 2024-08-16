@@ -69,10 +69,14 @@ def budget_view(request):
 
     budget_per_allenatore = {}
     for a in acquisti:
-        allenatore_id = a["allenatore"]
-        spesa_totale  = a['spesa_totale']
-        allenatore    =  User.objects.get(id = allenatore_id)
+        allenatore_id      = a["allenatore"]
+        spesa_totale       = a['spesa_totale']
+        allenatore_nome    = User.objects.get(id = allenatore_id).first_name
+        allenatore_cognome = User.objects.get(id = allenatore_id).last_name
+        allenatore         = User.objects.get(id = allenatore_id)
 
         budget_per_allenatore[allenatore] = 350 - spesa_totale
+    
+    budget_per_allenatore = sorted(budget_per_allenatore.items(), key = lambda x: x[1])
 
     return render(request, 'budget.html', {'budget_per_allenatore': budget_per_allenatore})
