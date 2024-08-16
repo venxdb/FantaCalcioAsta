@@ -79,4 +79,7 @@ def budget_view(request):
     
     budget_per_allenatore = sorted(budget_per_allenatore.items(), key = lambda x: x[1], reverse = True)
 
-    return render(request, 'budget.html', {'budget_per_allenatore': budget_per_allenatore})
+    return render(request, 'budget.html', 
+                  {
+                      'budget_per_allenatore': budget_per_allenatore,
+                      'utente_loggato': request.user})

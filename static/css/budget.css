@@ -84,3 +84,8 @@ box-sizing: border-box;
         font-size: 3em;
     }
 }
+
+
+.highlight {
+    background-color: #FFD700;
+}
