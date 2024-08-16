@@ -121,9 +121,10 @@ def rose_view(request):
     # Dividi gli allenatori in gruppi di 4 per riga
     divisi_in_righe = [rose_dict[i:i + 4] for i in range(0, len(rose_dict), 4)]
 
-    return render(request, 'rose.html',
+    return render(request, 'rose_test.html',
                   {
                       'divisi_in_righe': divisi_in_righe,
+                      'rose': rose_dict,
                       'utente_loggato': request.user
                   })
 
