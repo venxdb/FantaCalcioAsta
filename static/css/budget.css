@@ -87,5 +87,14 @@ box-sizing: border-box;
 
 
 .highlight {
-    background-color: #FFD700;
+    background-color: greenyellow;
+}
+.highlight h2 {
+    color: green;
+}
+.highlight p {
+    color: green;
+}
+.highlight:hover {
+    background-color: yellow;
 }

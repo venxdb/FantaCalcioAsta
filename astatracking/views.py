@@ -85,13 +85,12 @@ def budget_view(request):
                       'utente_loggato': request.user})
 
 @login_required
-def rose_view(request): 
-
+def rose_view(request):
     allenatori = User.objects.all()
     
-    rose_dict = {}
+    rose_dict = []
     for a in allenatori:
-        acquisti = Acquisti.objects.filter(allenatore = a)
+        acquisti = Acquisti.objects.filter(allenatore=a)
         
         portieri       = [] 
         difensori      = []
@@ -100,29 +99,32 @@ def rose_view(request):
 
         for acq in acquisti:
             giocatore = acq.giocatore
-            print(f"Giocatore: {giocatore.nome} Giocatore Ruolo: {giocatore.ruolo}")
             if giocatore.ruolo == "P":
                 portieri.append(giocatore.nome)
             elif giocatore.ruolo == "D":
                 difensori.append(giocatore.nome)
             elif giocatore.ruolo == "C":
                 centrocampisti.append(giocatore.nome)
-            else:
+            elif giocatore.ruolo == "A": 
                 attaccanti.append(giocatore.nome)
 
-        allenatore_dict = {}
-        allenatore_dict["Portieri"]       = portieri
-        allenatore_dict["Difensori"]      = difensori
-        allenatore_dict["Centrocampisti"] = centrocampisti
-        allenatore_dict["Attaccanti"]     = attaccanti
+        allenatore_dict = {
+            "nome": a.username,
+            "Portieri": portieri,
+            "Difensori": difensori,
+            "Centrocampisti": centrocampisti,
+            "Attaccanti": attaccanti
+        }
 
-        rose_dict[a] = allenatore_dict
+        rose_dict.append(allenatore_dict)
+
+    # Dividi gli allenatori in gruppi di 4 per riga
+    divisi_in_righe = [rose_dict[i:i + 4] for i in range(0, len(rose_dict), 4)]
 
     return render(request, 'rose.html',
                   {
-                      'rose': rose_dict,
+                      'divisi_in_righe': divisi_in_righe,
                       'utente_loggato': request.user
                   })
-
 
             
