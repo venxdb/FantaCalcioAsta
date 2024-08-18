@@ -128,3 +128,28 @@ class Acquisti(models.Model):
                             crediti = 10
                         )
                 print(f"Acquisti completati per {utente.username}")
+
+
+class StatisticheFanta(models.Model):
+
+    id              = models.AutoField(primary_key = True)
+    giocatore       = models.ForeignKey(Player_Quotes, on_delete = models.CASCADE, related_name = "statistiche")
+    ruolo           = models.CharField(max_length = 250)
+    stagione        = models.CharField(max_length = 250)
+    squadra         = models.CharField(max_length = 250)
+    partiteavoto    = models.IntegerField()
+    mediavoto       = models.DecimalField(max_digits=5, decimal_places=2)
+    fantamedia      = models.DecimalField(max_digits=5, decimal_places=2)
+    goalfatti       = models.IntegerField()
+    goalsubiti      = models.IntegerField()
+    rigoriparati    = models.IntegerField()
+    rigoricalciati  = models.IntegerField()
+    rigorisegnati   = models.IntegerField()
+    rigorisbagliati = models.IntegerField()
+    assist          = models.IntegerField()
+    ammonizioni     = models.IntegerField()
+    espulsioni      = models.IntegerField()
+    autogoal        = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.giocatore.nome} - {self.stagione}"
