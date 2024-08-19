@@ -1,41 +1,58 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    box-sizing: border-box;
+body {
+    background-image: url('../img/sports.png');
+    font-family: 'Open-Sans', sans-serif;
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
-    margin: 0;
+    justify-content: space-between;
     padding: 0;
-    height: 100vh; 
-    gap: 10px; 
+    margin-left: 15px;
+    margin-top: 30px;
 }
-
-.box {
-    width: calc(25% - 10px); 
-    height: 50vh; 
-    border: 1px solid #000;
-    box-sizing: border-box; 
+.allenatore {
+    width: 12%; /* Leggermente inferiore a 12.5% per garantire spazio tra le colonne */
+    margin-bottom: 20px;
+}
+.allenatore h3 {
+    font-size: 30px;
+    margin: 0 0 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: darkgreen;
+    text-transform: uppercase;
+    
+}
+.giocatore {
     display: flex;
-    flex-direction: column;
-    overflow: auto; 
+    align-items: center;
+    margin-bottom: 2px;
+    background-color: #f0f0f0;
+    
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0;
+.ruolo-badge {
+    width: 16px;
+    height: 16px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
 }
-
-th, td {
-    border: 1px solid #000;
-    padding: 4px;
-    text-align: center;
+.nome-giocatore {
+    padding: 2px 5px;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    
 }
-
-.role-table {
-    margin: 0;
+@media (max-width: 1200px) {
+    .allenatore {
+        width: 24%; 
+    }
 }

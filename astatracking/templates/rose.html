@@ -10,64 +10,70 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
+<style>
+    .menu-btn {
+    
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      position: relative;
+      top: 10px;
+      left: 10px;
+    }
+    .menu-btn div {
+      background-color: #333;
+      height: 10px;
+      margin: 6px 0;
+      transition: 0.4s;
+    }
+    .menu-content {
+      display: none;
+      list-style-type: none;
+      padding: 0;
+      margin: 20px 0 0 0;
+    }
+    .menu-content a {
+      text-decoration: none;
+      font-size: 18px;
+      color: #438a1b;
+      display: block;
+      padding: 10px 10px;
+    }
+    .menu-content a:hover {
+      background-color: #f0f0f0;
+    }
+    </style>
+    
+    <script>
+    function toggleMenu() {
+      const menuContent = document.getElementById("menu-content");
+      menuContent.style.display = menuContent.style.display === "block" ? "none" : "block";
+    }
+    </script>
 <body>
+    {% include "partials/voci.html" %}
     <div class="container">
-        {% for riga in divisi_in_righe %}
-            {% for allenatore in riga %}
-                <div class="box">
-                    <h3>{{ allenatore.nome }}</h3>
-                    <table class="role-table">
-                        <thead>
-                            <tr>
-                                <th>Ruolo</th>
-                                <th>Giocatori</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Portieri</td>
-                                <td>
-                                    <ul>
-                                        {% for portiere in allenatore.Portieri %}
-                                            <li>{{ portiere }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Difensori</td>
-                                <td>
-                                    <ul>
-                                        {% for difensore in allenatore.Difensori %}
-                                            <li>{{ difensore }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Centrocampisti</td>
-                                <td>
-                                    <ul>
-                                        {% for centrocampista in allenatore.Centrocampisti %}
-                                            <li>{{ centrocampista }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Attaccanti</td>
-                                <td>
-                                    <ul>
-                                        {% for attaccante in allenatore.Attaccanti %}
-                                            <li>{{ attaccante }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            {% endfor %}
+        {% for allenatore in rose %}
+            <div class="allenatore">
+                <h3>{{ allenatore.nome }}</h3>
+                {% for ruolo, giocatori in allenatore.items %}
+                    {% if ruolo != 'nome' %}
+                        {% for giocatore in giocatori %}
+                            <div class="giocatore">
+                                <span class="ruolo-badge" style="background-color: 
+                                    {% if ruolo == 'Portieri' %}orange{% endif %}
+                                    {% if ruolo == 'Difensori' %}green{% endif %}
+                                    {% if ruolo == 'Centrocampisti' %}blue{% endif %}
+                                    {% if ruolo == 'Attaccanti' %}red{% endif %}
+                                ">
+                                    {{ ruolo|first }}
+                                </span>
+                                <span class="nome-giocatore">{{ giocatore }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
         {% endfor %}
     </div>
 </body>
