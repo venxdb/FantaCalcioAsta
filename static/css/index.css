@@ -1,101 +1,162 @@
 html {
-    font-size: 32px;
-    box-sizing: border-box;
-    font-family: 'Open-Sans',sans-serif;
-    font-weight: 800;
-  }
-  
-  body {
-    margin: 0; 
-    background-image: url("../img/green.jpg");
-    
-  }
- 
-  .login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: rgba(221, 224, 229, 0.1);
-    color: #c9d1d9;
-  }
-
-
-  .login-page-wrapper {
-    width: 50%; 
-    max-width: 1000px;
-    padding: 2rem; 
-    background: rgba(22, 27, 34, 0.7);
-    border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
-    height: 80%; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box; 
-  }
-    #logo {
-    position: absolute;
-    top: 10px; /* Spazio dal bordo superiore del contenitore padre */
-    left: 10px; /* Spazio dal bordo sinistro del contenitore padre */
-    width: 150px; /* Dimensione del logo */
-    height: 150px; /* Dimensione del logo */
-    z-index: 10; /* Assicura che il logo sia sopra altri contenuti */
+  font-size: 16px;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  color: #c9d1d9;
 }
 
-  
-  .login-page header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1.25rem; 
-    
-  }
-  
-  .rlp-username,
-  .rlp-password {
-    display: flex;
-    flex-direction: column;
-    width: 100%; 
-    margin-bottom: 1rem; 
-  }
-  
-  .rlp-username input,
-  .rlp-password input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #30363d;
-    border-radius: 0.25rem; 
-    background: rgba(13, 17, 23, 0.5);
-    color: #c9d1d9;
-     
-  }
-  
-  .rlp-username,
-  .rlp-password {
-    padding: 0.75rem; 
-    border-radius: 0.25rem; 
-    background: rgba(13, 17, 23, 0.5);
-    box-sizing: border-box; 
-  }
-  
+body {
+  margin: 0;
+  background-image: url("../img/green.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+img {
+  width: 350px;
+  height: 350px;
+
+}
+.logo-container { 
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.login-page-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background: rgba(22, 27, 34, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+header {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+form {
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid #238636;
+}
+
+button {
+  width: 80%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  background: #238636;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-top: 40px;
+}
+
+button:hover {
+  background-color: #2ea043;
+}
+
+p {
+  color: #ff4d4f;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.login-page-drops {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+/* Media Query per schermi più piccoli */
+@media (max-width: 767px) {
   button {
-    width: 100%; 
-    padding: 0.75rem; 
-    border: none;
-    border-radius: 0.25rem; 
-    background: #238636;
-    color: #ffffff;
-    cursor: pointer;
-    margin-top: auto; 
-    font-family: 'Open-Sans', sans-serif; 
-    font-weight: 600;
-    font-size: 23px;
+    padding: 1.25rem; /* Aumenta l'altezza del pulsante */
+    font-size: 1.25rem;
   }
-  
-  button:hover {
-    background-color: #2ea043;
+
+  img {
+    width: 150px;
+    height: 150px;
   }
-  
+}
+
+@media (min-width: 768px) {
+  .login-page-wrapper {
+    max-width: 500px;
+    padding: 3rem;
+  }
+
+  header {
+    font-size: 1.75rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 1rem;
+    font-size: 1.125rem;
+  }
+
+  button {
+    padding: 1rem;
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .login-page-wrapper {
+    max-width: 600px;
+    padding: 4rem;
+  }
+
+  header {
+    font-size: 2rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 1.25rem;
+    font-size: 1.25rem;
+  }
+
+  button {
+    padding: 1.25rem;
+    font-size: 1.5rem;
+  }
+}
