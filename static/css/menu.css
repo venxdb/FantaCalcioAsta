@@ -13,7 +13,7 @@ html, body {
 
 h1 {
     color: darkgreen;
-    font-size: 1.5em; 
+    font-size: 2.5em; 
     margin: 20px 0; 
     position: absolute; 
     top: 20px; 
@@ -81,7 +81,7 @@ h2 {
 /* Stili per schermi piccoli */
 @media (max-width: 768px) {
     h1 {
-        font-size: 1.2em; 
+        font-size: 1.5em; 
         top: 15px; 
     }
 
@@ -114,7 +114,7 @@ h2 {
 
 @media (max-width: 1024px) {
     h1 {
-        font-size: 0.8em; 
+        font-size: 1.5em; 
         top: 1px; 
     }
 

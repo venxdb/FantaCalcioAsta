@@ -8,8 +8,50 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        .menu-btn {
+        
+          cursor: pointer;
+          width: 80px;
+          height: 80px;
+          position: relative;
+          top: 10px;
+          left: 10px;
+        }
+        .menu-btn div {
+          background-color: #333;
+          height: 14px;
+          margin: 6px 0;
+          transition: 0.4s;
+        }
+        .menu-content {
+          display: none;
+          list-style-type: none;
+          padding: 0;
+          margin: 20px 0 0 0;
+        }
+        .menu-content a {
+          text-decoration: none;
+          font-size: 38px;
+          color: #333;
+          display: block;
+          padding: 10px 0;
+        }
+        .menu-content a:hover {
+          background-color: #f0f0f0;
+        }
+        </style>
+        
+        <script>
+        function toggleMenu() {
+          const menuContent = document.getElementById("menu-content");
+          menuContent.style.display = menuContent.style.display === "block" ? "none" : "block";
+        }
+        </script>
 </head>
 <body>
+    {% include "partials/voci.html" %}
     <h1>Visualizza Budget</h1>
 
     <div class="container">

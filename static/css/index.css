@@ -17,7 +17,12 @@ body {
   align-items: center;
   height: 100vh;
 }
-img {
+#logo {
+  width: 350px;
+  height: 350px;
+
+}
+#scritta {
   width: 350px;
   height: 350px;
 
@@ -111,7 +116,7 @@ p {
     font-size: 1.25rem;
   }
 
-  img {
+  #logo,#scritta {
     width: 150px;
     height: 150px;
   }
