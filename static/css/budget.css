@@ -18,7 +18,7 @@
 }
 #back {
     position: absolute; 
-    top: 180px;  
+    top: 60px;  
     left: 200px;  
     height: 100px;
     width: 100px;
@@ -31,7 +31,7 @@
 }
 #cart {
     position: absolute; 
-    top: 180px;  
+    top: 60px;  
     right: 200px;  
     height: 100px;
     width: 100px;
@@ -87,7 +87,7 @@ box-sizing: border-box;
     background-color: green;
 }
 
-@media (max-width: 1700px) {
+@media (max-width: 1024px) {
     h1 {
         font-size: 28px;
     }
@@ -99,30 +99,40 @@ box-sizing: border-box;
     }
     .box {
         width: calc(40%);
-        height: 80px;
+        height: 50px;
     }
     #back {
         position: absolute; 
         height: 70px;
         width: 70px;
-        top: 10px;
+        top: 20px;
         left: 10px;
     }
     #cart {
         position: absolute; 
         height: 70px;
         width: 70px;
-        top: 10px;
+        top: 20px;
         right: 10px;
     }
 }
 
 @media (max-width: 768px) {
+    .container{
+        width: 80%;
+    }
     h1 {
-        font-size: 20px;
+        font-size: 30px;
+    }
+    .box {
+        width: calc(30%);
+        height: 70px;
+        font-size: 15px;
+        
+
     }
     .box h2 {
-        font-size: 1.5em;
+        font-size: 1.2em;
     }
     .box p {
         font-size: 3em;
@@ -130,16 +140,16 @@ box-sizing: border-box;
     #back {
         position: absolute; 
         height: 70px;
-        width: 70px;
-        top: 10px;
-        left: 10px;
+        width: 50px;
+        top: 20px;
+        left: 30px;
     }
-    #back {
+    #cart {
         position: absolute; 
         height: 70px;
-        width: 70px;
-        top: 10px;
-        right: 10px;
+        width: 50px;
+        top: 20px;
+        right: 30px;
     }
 }
 

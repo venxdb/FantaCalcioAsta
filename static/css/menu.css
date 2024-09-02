@@ -78,44 +78,11 @@ h2 {
     background-color: green;
 }
 
-/* Stili per schermi piccoli */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 1.5em; 
-        top: 15px; 
-    }
-
-    .timeline-container {
-        flex-direction: column;
-        align-items: center;
-        padding: 15px; 
-        margin-top: 80px; 
-    }
-
-    .timeline-step {
-        width: 90%; 
-        margin-bottom: 20px; 
-        padding: 15px; 
-    }
-
-    .timeline-step h2 {
-        font-size: 28px;
-    }
-
-    .timeline-step p {
-        font-size: 18px;
-    }
-
-    .timeline-step button {
-        padding: 12px 25px;
-        font-size: 14px;
-    }
-}
 
 @media (max-width: 1024px) {
     h1 {
         font-size: 1.5em; 
-        top: 1px; 
+        top: 15px; 
     }
 
     .timeline-container {
@@ -144,3 +111,43 @@ h2 {
         font-size: 14px;
     }
 }
+
+/* Stili per schermi piccoli */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.2em; 
+        top: 1px; 
+    }
+
+    .timeline-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px; 
+        margin-top: 80px; 
+        height: 90%;
+    
+       
+    }
+
+    .timeline-step {
+        width: 90%; 
+        margin-bottom: 20px; 
+        padding: 15px; 
+        min-height: 100px !important;
+    
+    }
+
+    .timeline-step h2 {
+        font-size: 28px;
+    }
+
+    .timeline-step p {
+        font-size: 18px;
+    }
+
+    .timeline-step button {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+}
+

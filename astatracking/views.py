@@ -45,12 +45,12 @@ def acquisti_view(request):
             giocatore = Player_Quotes.objects.get(id=giocatore_id)
             acquisto = Acquisti(allenatore=allenatore, giocatore=giocatore, crediti=crediti)
             acquisto.save()
-            return JsonResponse({'success': True, 'message': 'Acquisto salvato con successo!'}) # Redirige a una pagina di successo
+            return JsonResponse({'success': True, 'message': 'Acquisto salvato con successo!'})
         except ObjectDoesNotExist:
             return render(request, 'acquisti.html', {'error': 'Allenatore o giocatore non trovato'})
-    
+
     # Gestione delle richieste GET
-    if request.is_ajax() and request.GET.get('action') == 'autocomplete':
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.GET.get('action') == 'autocomplete':
         query = request.GET.get('q', '')
         giocatori = Player_Quotes.objects.filter(nome__icontains=query)
         results = [{'id': giocatore.id, 'text': giocatore.nome} for giocatore in giocatori]

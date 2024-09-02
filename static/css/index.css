@@ -165,3 +165,25 @@ p {
     font-size: 1.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .login-page-wrapper {
+    max-width: 300px;
+    padding: 4rem;
+  }
+
+  header {
+    font-size: 2rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 1.25rem;
+    font-size: 1.25rem;
+  }
+
+  button {
+    padding: 1.25rem;
+    font-size: 1.5rem;
+  }
+}

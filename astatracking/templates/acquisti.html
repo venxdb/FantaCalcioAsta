@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crea Acquisto</title>
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/acquisti.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     <html lang="it">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Crea Acquisto</title>
-            <link rel="stylesheet" href="{% static 'css/index.css' %}">
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
         </head>
         <body>
+            <a href="/login/menu">
+                <div id="back-container">
+                  <img src="{% static 'img/return_back.svg' %}" alt="back" id="back">
+                </div>
+              </a>
             <div class="container">
                 <h2>Crea Acquisto</h2>
                 <form id="acquisto-form">
@@ -32,7 +33,7 @@
                     <select name="giocatore" id="giocatore" style="width: 100%;">
                     </select>
         
-                    <label for="crediti">Crediti:</label>
+                    <label for="crediti" id="crediti">Crediti:</label>
                     <input type="number" name="crediti" id="crediti" required />
         
                     <button type="submit">Salva</button>
