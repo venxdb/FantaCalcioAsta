@@ -28,7 +28,10 @@ html, body {
     width: 18%; 
     margin-bottom: 20px;
     margin-right: 20px;
+    position: relative; /* Per posizionare i figli in modo assoluto se necessario */
+    overflow: hidden; /* Evita che il contenuto della tendina esca dal contenitore */
 }
+
 .allenatore h3 {
     font-size: 30px;
     margin: 0 0 10px 0;
@@ -37,15 +40,41 @@ html, body {
     text-overflow: ellipsis;
     color: darkgreen;
     text-transform: uppercase;
-    
 }
+
+.ruolo {
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.2em; /* Aumenta la dimensione del testo */
+    color: white; /* Colore del testo */
+}
+
+.ruolo-portieri {
+    background-color: orange;
+}
+
+.ruolo-difensori {
+    background-color: green;
+}
+
+.ruolo-centrocampisti {
+    background-color: blue;
+}
+
+.ruolo-attaccanti {
+    background-color: red;
+}
+
+
 .giocatore {
     display: flex;
     align-items: center;
     margin-bottom: 2px;
     background-color: #f0f0f0;
-    
 }
+
 .ruolo-badge {
     width: 16px;
     height: 16px;
@@ -56,6 +85,7 @@ html, body {
     font-size: 10px;
     font-weight: bold;
 }
+
 .nome-giocatore {
     padding: 2px 5px;
     font-size: 20px;
@@ -63,56 +93,53 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
     flex-grow: 1;
-    
 }
+
 @media (max-width: 1200px) { 
-    .body {
+    body {
         margin-top: 500px;
     }
     .container {
-        gap: 5px; /* Riduci il gap tra gli allenatori */
+        gap: 5px; 
     }
 
     .allenatore {
-        width: 150px; /* Ridotto per schermi più piccoli */
+        width: 150px; 
     }
 
     .allenatore h3 {
-        font-size: 0.9em; /* Ulteriore riduzione per schermi più piccoli */
+        font-size: 0.9em; 
         margin-bottom: 5px;
     }
 
     .giocatore {
-        padding: 1px 3px; /* Ridotto il padding */
+        padding: 1px 3px; 
     }
 
     .nome-giocatore {
-        font-size: 0.8em; /* Ridotto per schermi più piccoli */
+        font-size: 0.8em; 
         padding: 1px 2px;
     }
 }
 
 @media (max-width: 600px) {
-   body {
-    margin-top: 1400px;
-   }
+    body {
+        margin-top: 1400px;
+    }
     .container {
-        flex-direction: column; /* Cambia la direzione per schermi molto piccoli */
-        align-items: stretch; /* Assicura che gli allenatori si adattino alla larghezza */
-       
+        flex-direction: column;
+        align-items: stretch; 
     }
 
-    
-        .allenatore {
-           width: 100%;
-        }
-    
+    .allenatore {
+        width: 100%;
+    }
 
     .allenatore h3 {
-        font-size: 0.8em; /* Ulteriore riduzione per schermi molto piccoli */
+        font-size: 0.8em; 
     }
     .nome-giocatore {
-        font-size: 1.3em; /* Ridotto per schermi più piccoli */
+        font-size: 1.3em; 
         padding: 1px 2px;
     }
 }
