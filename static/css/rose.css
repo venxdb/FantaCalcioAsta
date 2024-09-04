@@ -1,19 +1,33 @@
-body {
-    background-image: url('../img/sports.png');
-    font-family: 'Open-Sans', sans-serif;
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url(../img/sports.png);
+}
 
+.max-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
 }
 
 .container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-left: 15px;
-    margin-top: 80px;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 20px; 
 }
+
 .allenatore {
-    width: 12%; 
+    width: 18%; 
     margin-bottom: 20px;
+    margin-right: 20px;
 }
 .allenatore h3 {
     font-size: 30px;
@@ -51,10 +65,54 @@ body {
     flex-grow: 1;
     
 }
-@media (max-width: 1200px) {
-    .allenatore {
-        width: 24%; 
+@media (max-width: 1200px) { 
+    .body {
+        margin-top: 500px;
     }
+    .container {
+        gap: 5px; /* Riduci il gap tra gli allenatori */
+    }
+
+    .allenatore {
+        width: 150px; /* Ridotto per schermi più piccoli */
+    }
+
     .allenatore h3 {
-        font-size: 20px;}
+        font-size: 0.9em; /* Ulteriore riduzione per schermi più piccoli */
+        margin-bottom: 5px;
+    }
+
+    .giocatore {
+        padding: 1px 3px; /* Ridotto il padding */
+    }
+
+    .nome-giocatore {
+        font-size: 0.8em; /* Ridotto per schermi più piccoli */
+        padding: 1px 2px;
+    }
+}
+
+@media (max-width: 600px) {
+   body {
+    margin-top: 1400px;
+   }
+    .container {
+        flex-direction: column; /* Cambia la direzione per schermi molto piccoli */
+        align-items: stretch; /* Assicura che gli allenatori si adattino alla larghezza */
+       
+    }
+
+    
+        .allenatore {
+           width: 100%;
+        }
+    
+
+    .allenatore h3 {
+        font-size: 0.8em; /* Ulteriore riduzione per schermi molto piccoli */
+    }
+    .nome-giocatore {
+        font-size: 1.3em; /* Ridotto per schermi più piccoli */
+        padding: 1px 2px;
+    }
 }
