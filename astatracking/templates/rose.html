@@ -54,6 +54,16 @@
     </style>
 </head>
 <body>
+    <a href="/login/menu">
+        <div id="back-container">
+          <img src="{% static 'img/return_back.svg' %}" alt="back" id="back">
+        </div>
+      </a>
+      <a href="/login/menu/acquisti">
+        <div id="cart-container">
+          <img src="{% static 'img/cart.svg' %}" alt="shop" id="cart">
+        </div>
+      </a>
     <div id="max-container">
         <div class="container">
             {% for allenatore in rose %}
@@ -80,18 +90,34 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.ruolo').click(function() {
-                let giocatoriDiv = $(this).next('.giocatori');
+  $(document).ready(function() {
+    $('.ruolo').click(function() {
+        // Ottieni la classe del ruolo cliccato
+        let ruoloClass = $(this).attr('class').split(' ').find(c => c.startsWith('ruolo-'));
 
-                if (giocatoriDiv.hasClass('show')) {
-                    giocatoriDiv.removeClass('show').css('max-height', 0);
-                } else {
-                    $('.giocatori.show').removeClass('show').css('max-height', 0);
-                    giocatoriDiv.addClass('show').css('max-height', giocatoriDiv.prop('scrollHeight') + 'px');
-                }
-            });
+        // Se ci sono già giocatori visibili del ruolo cliccato, chiudiamo tutto e ripristiniamo le barre
+        if ($(this).next('.giocatori').hasClass('show')) {
+            $('.giocatori').removeClass('show').css('max-height', 0);  // Nascondi tutti i giocatori
+            $('.ruolo').show();  // Mostra di nuovo tutte le barre dei ruoli
+            return;
+        }
+
+        // Nascondi tutte le altre barre dei ruoli
+        $('.ruolo').not('.' + ruoloClass).hide();
+
+        // Nascondi tutti i giocatori prima di mostrare quelli del ruolo selezionato
+        $('.giocatori').removeClass('show').css('max-height', 0);
+
+        // Mostra i giocatori di quel ruolo per tutte le squadre
+        $('.' + ruoloClass).each(function() {
+            let giocatoriDiv = $(this).next('.giocatori');
+            giocatoriDiv.addClass('show').css('max-height', giocatoriDiv.prop('scrollHeight') + 'px');
         });
+    });
+});
+
+
+
     </script>
 </body>
 </html>

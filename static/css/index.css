@@ -35,7 +35,7 @@ body {
 
 .login-page-wrapper {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   padding: 2rem;
   background: rgba(22, 27, 34, 0.9);
   border-radius: 10px;
@@ -45,7 +45,7 @@ body {
 
 header {
   margin-bottom: 2rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -68,7 +68,7 @@ input[type="password"] {
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.5rem;
   outline: none;
   transition: background-color 0.3s ease, border 0.3s ease;
 }
@@ -87,7 +87,7 @@ button {
   background: #238636;
   color: #ffffff;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   transition: background-color 0.3s ease;
   margin-top: 40px;
@@ -109,81 +109,46 @@ p {
   color: #ffffff;
 }
 
-/* Media Query per schermi più piccoli */
-@media (max-width: 767px) {
-  button {
-    padding: 1.25rem; /* Aumenta l'altezza del pulsante */
-    font-size: 1.25rem;
-  }
 
-  #logo,#scritta {
-    width: 150px;
-    height: 150px;
-  }
-}
-
-@media (min-width: 768px) {
-  .login-page-wrapper {
-    max-width: 500px;
-    padding: 3rem;
-  }
-
-  header {
-    font-size: 1.75rem;
-  }
-
-  input[type="text"],
-  input[type="password"] {
-    padding: 1rem;
-    font-size: 1.125rem;
-  }
-
-  button {
-    padding: 1rem;
-    font-size: 1.125rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .login-page-wrapper {
-    max-width: 600px;
-    padding: 4rem;
-  }
-
-  header {
-    font-size: 2rem;
-  }
-
-  input[type="text"],
-  input[type="password"] {
-    padding: 1.25rem;
-    font-size: 1.25rem;
-  }
-
-  button {
-    padding: 1.25rem;
-    font-size: 1.5rem;
-  }
-}
 
 @media (max-width: 768px) {
   .login-page-wrapper {
     max-width: 300px;
-    padding: 4rem;
+    padding: 2rem;
+    display: flex; /* Flexbox per il layout */
+    flex-direction: column; /* Disposizione in colonna degli elementi */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra orizzontalmente */
+    margin: 0 auto; /* Centra il wrapper stesso */
   }
 
   header {
     font-size: 2rem;
+    text-align: center; /* Centra il testo dell'intestazione */
   }
 
   input[type="text"],
   input[type="password"] {
-    padding: 1.25rem;
-    font-size: 1.25rem;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 90%; /* Fai sì che gli input occupino tutto lo spazio disponibile */
+    max-width: 100%; /* Assicura che non superino la larghezza del container */
+    margin: 10px 0; /* Aggiungi margine verticale per separare gli input */
   }
 
   button {
-    padding: 1.25rem;
-    font-size: 1.5rem;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 100%; /* Evita che il bottone esca dal contenitore */
+    margin: 10px 0; /* Aggiungi margine verticale per separare il bottone dagli input */
+  }
+
+  #logo,
+  #scritta {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 10px auto; /* Centra il logo e la scritta e aggiungi un margine inferiore */
   }
 }
+

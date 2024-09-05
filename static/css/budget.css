@@ -18,10 +18,10 @@
 }
 #back {
     position: absolute; 
-    top: 60px;  
+    top: 40px;  
     left: 200px;  
     height: 100px;
-    width: 100px;
+    width: 80px;
 }
 
 #cart-container{
@@ -31,10 +31,10 @@
 }
 #cart {
     position: absolute; 
-    top: 60px;  
+    top: 40px;  
     right: 200px;  
     height: 100px;
-    width: 100px;
+    width: 80px;
 }
 
 h1 {

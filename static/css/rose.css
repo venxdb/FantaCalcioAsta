@@ -28,8 +28,8 @@ html, body {
     width: 18%; 
     margin-bottom: 20px;
     margin-right: 20px;
-    position: relative; /* Per posizionare i figli in modo assoluto se necessario */
-    overflow: hidden; /* Evita che il contenuto della tendina esca dal contenitore */
+    position: relative; 
+    overflow: hidden; 
 }
 
 .allenatore h3 {
@@ -47,8 +47,8 @@ html, body {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
-    font-size: 1.2em; /* Aumenta la dimensione del testo */
-    color: white; /* Colore del testo */
+    font-size: 1.2em; 
+    color: white; 
 }
 
 .ruolo-portieri {
@@ -95,51 +95,87 @@ html, body {
     flex-grow: 1;
 }
 
-@media (max-width: 1200px) { 
-    body {
-        margin-top: 500px;
-    }
+#back-container{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#back {
+    position: absolute; 
+    top: 30px;  
+    left: 100px;  
+    height: 70px;
+    width: 50px;
+}
+
+#cart-container{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+#cart {
+    position: absolute; 
+    top: 30px;  
+    right: 100px;  
+    height: 70px;
+    width: 50px;
+}
+
+
+@media (max-width: 900px) {
     .container {
-        gap: 5px; 
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px; 
+        font-size: 0.6rem;
+        margin-top: 550px;
     }
 
     .allenatore {
-        width: 150px; 
+        width: 100%; 
+        margin: 0;
     }
 
     .allenatore h3 {
-        font-size: 0.9em; 
-        margin-bottom: 5px;
+        font-size: 0.9rem;
     }
 
-    .giocatore {
-        padding: 1px 3px; 
+   
+    .ruolo {
+        font-size: 1rem; 
+        padding: 0px; 
     }
 
-    .nome-giocatore {
-        font-size: 0.8em; 
-        padding: 1px 2px;
+    .giocatori {
+        font-size: 1rem; 
+        padding: 0px;
     }
-}
 
-@media (max-width: 600px) {
+
+    
     body {
-        margin-top: 1400px;
-    }
-    .container {
-        flex-direction: column;
-        align-items: stretch; 
+        margin-top: 0;
+        padding-top: 0;
     }
 
-    .allenatore {
-        width: 100%;
+    #max-container {
+        padding-top: 10px; 
     }
 
-    .allenatore h3 {
-        font-size: 0.8em; 
+    #back {
+        position: absolute; 
+        height: 70px;
+        width: 30px;
+        top: 20px;
+        left: 30px;
     }
-    .nome-giocatore {
-        font-size: 1.3em; 
-        padding: 1px 2px;
+    #cart {
+        position: absolute; 
+        height: 70px;
+        width: 30px;
+        top: 20px;
+        right: 30px;
     }
 }
+
+
