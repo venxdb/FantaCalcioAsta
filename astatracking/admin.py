@@ -3,7 +3,7 @@ from django.core.management import call_command
 from django import forms
 
 
-from .models import Player_Quotes, PlayerQuotesFile, FullStatistics, Teams, Acquisti
+from .models import Player_Quotes, PlayerQuotesFile, FullStatistics, Teams, Acquisti, AstaCorrente, AstaOfferte
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -109,4 +109,9 @@ class AcquistiAdmin(admin.ModelAdmin):
             return PlayerQuotesModelChoiceField(queryset = Player_Quotes.objects.all().order_by('nome'))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-
+@admin.register(AstaCorrente)
+class AstaCorrente(admin.ModelAdmin):
+    list_display = ("giocatore", "in_corso")
+@admin.register(AstaOfferte)
+class AstaOfferte(admin.ModelAdmin):
+    list_display = ("allenatore", "giocatore", "crediti")

@@ -153,3 +153,14 @@ class StatisticheFanta(models.Model):
 
     def __str__(self):
         return f"{self.giocatore.nome} - {self.stagione}"
+    
+class AstaOfferte(models.Model):
+
+    id         = models.AutoField(primary_key = True)
+    allenatore = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "offerte")
+    giocatore  = models.ForeignKey(Player_Quotes, on_delete = models.CASCADE, related_name = "offerte")
+    crediti    = models.IntegerField()
+
+class AstaCorrente(models.Model):
+    giocatore = models.ForeignKey(Player_Quotes, on_delete=models.CASCADE, related_name = "giocatoreastacorrente")
+    in_corso = models.BooleanField(default=False)

@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import User, Player_Quotes, Acquisti
+from .models import User, Player_Quotes, Acquisti, AstaOfferte, AstaCorrente
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
@@ -128,13 +128,39 @@ def rose_view(request):
                       'utente_loggato': request.user
                   })
 
-@login_required
-def asta_view(request):
-    return render(request, 'asta.html')
 
-@login_required
+def asta_view(request):
+    asta_corrente = AstaCorrente.objects.filter(in_corso=True).first()
+
+    if request.method == 'POST' and asta_corrente:
+        crediti = request.POST['crediti']
+        AstaOfferte.objects.create(
+            allenatore=request.user,
+            giocatore=asta_corrente.giocatore,
+            crediti=crediti
+        )
+        return JsonResponse({'success': True, 'message': 'Offerta inviata con successo'})
+    
+    return render(request, 'asta.html', {'giocatore_scelto': asta_corrente.giocatore if asta_corrente else None})
+
+
 def admin_asta_view(request):
+    if request.method == 'POST':
+        if 'giocatore' in request.POST:
+            giocatore_id = request.POST['giocatore']
+            giocatore_scelto = Player_Quotes.objects.get(id=giocatore_id)
+
+            # Aggiorna o crea la nuova asta corrente
+            AstaCorrente.objects.update_or_create(
+                in_corso=True,
+                defaults={'giocatore': giocatore_scelto}
+            )
+            return JsonResponse({'success': True, 'message': 'Asta avviata con successo'})
+        elif 'mostra_offerte' in request.POST:
+            offerte = AstaOfferte.objects.all()
+            return render(request, 'admin-asta.html', {'offerte': offerte})
     return render(request, 'admin-asta.html')
+
 
 
             
