@@ -128,4 +128,9 @@ def rose_view(request):
                       'utente_loggato': request.user
                   })
 
+@login_required
+def asta_view(request):
+    return render(request, 'asta.html')
+
+
             

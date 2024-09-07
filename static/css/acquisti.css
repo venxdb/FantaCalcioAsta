@@ -162,6 +162,18 @@ span.select2-container--default .select2-selection--single {
     height: 100px;
     width: 100px;
 }
+#auction-container{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#auction {
+    position: absolute; 
+    top: 60px;  
+    right: 400px;  
+    height: 100px;
+    width: 100px;
+}
 
 
 @media (max-width: 768px) {
@@ -202,5 +214,12 @@ span.select2-container--default .select2-selection--single {
         width: 50px;
         top: 20px;
         left: 30px;
+    }
+    #auction {
+        position: absolute; 
+        height: 70px;
+        width: 50px;
+        top: 20px;
+        right: 30px;
     }
 }
