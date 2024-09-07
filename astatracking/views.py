@@ -132,5 +132,9 @@ def rose_view(request):
 def asta_view(request):
     return render(request, 'asta.html')
 
+@login_required
+def admin_asta_view(request):
+    return render(request, 'admin-asta.html')
+
 
             

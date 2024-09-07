@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/menu/acquisti', views.acquisti_view, name = "acquisti"),
     path('login/menu/rose', views.rose_view, name = "rose"),
     path('login/menu/asta', views.asta_view, name = "asta"),
+    path('login/menu/admin-asta',views.admin_asta_view, name="admin_asta"),
 ]
 
