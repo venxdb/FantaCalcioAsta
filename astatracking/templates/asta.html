@@ -6,92 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crea Acquisto</title>
     <link rel="stylesheet" href="{% static 'css/acquisti.css' %}">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+</head>
+<body id="asta">
+    <a href="/login/menu">
+        <div id="back-container">
+            <img src="{% static 'img/return_back.svg' %}" alt="back" id="back">
+        </div>
+    </a>
 
-    <html lang="it">
-        </head>
-        <body>
-            <a href="/login/menu">
-                <div id="back-container">
-                  <img src="{% static 'img/return_back.svg' %}" alt="back" id="back">
-                </div>
-              </a>
-              <a href="/login/menu/asta">
-                <div id="auction-container">
-                  <img src="{% static 'img/auction.svg' %}" alt="back" id="auction">
-                </div>
-              </a>
-            <div class="container">
-                <h2>Crea Acquisto</h2>
-                <form id="acquisto-form">
-                    {% csrf_token %}
-                    
-                    <label for="allenatore">Allenatore:</label>
-                    <select name="allenatore" id="allenatore">
-                        {% for allenatore in allenatori %}
-                            <option value="{{ allenatore.id }}">{{ allenatore.get_full_name }}</option>
-                        {% endfor %}
-                    </select>
-        
-                    <label for="giocatore">Giocatore:</label>
-                    <select name="giocatore" id="giocatore" style="width: 100%;">
-                    </select>
-        
-                    <label for="crediti" id="crediti">Crediti:</label>
-                    <input type="number" name="crediti" id="crediti" required />
-        
-                    <button type="submit">Salva</button>
-        
-                    <p id="message"></p> <!-- Per visualizzare il messaggio -->
-                </form>
-            </div>
-        
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $('#giocatore').select2({
-                        placeholder: 'Seleziona un giocatore',
-                        ajax: {
-                            url: '{% url "acquisti" %}',
-                            dataType: 'json',
-                            delay: 250,
-                            data: function(params) {
-                                return {
-                                    action: 'autocomplete',
-                                    q: params.term
-                                };
-                            },
-                            processResults: function(data) {
-                                return {
-                                    results: data.results
-                                };
-                            },
-                            cache: true
-                        }
-                    });
-        
-                    $('#acquisto-form').on('submit', function(e) {
-                        e.preventDefault(); // Impedisce il comportamento predefinito del form
-        
-                        $.ajax({
-                            url: '{% url "acquisti" %}',
-                            type: 'POST',
-                            data: $(this).serialize(), // Invia i dati del form
-                            success: function(response) {
-                                if (response.success) {
-                                    $('#message').text(response.message).css('color', 'green');
-                                } else {
-                                    $('#message').text(response.message).css('color', 'red');
-                                }
-                            },
-                            error: function() {
-                                $('#message').text('Si è verificato un errore.').css('color', 'red');
-                            }
-                        });
-                    });
-                });
-            </script>
-        </body>
-        </html>
+    <div class="container">
+        <h2>Fai la tua Offerta</h2>
+        <form id="acquisto-form">
+            {% csrf_token %}
+            
+            <label for="giocatore">Giocatore:</label>
+            <div id="giocatore" class="giocatore-scelto">{{ giocatore_scelto }}</div> 
+
+            <label for="crediti" id="crediti">Crediti:</label>
+            <input type="number" name="crediti" id="crediti" required />
+
+            <button type="submit">Offerta</button>
+
+            <p id="message"></p> <!-- Per visualizzare il messaggio -->
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $('#acquisto-form').on('submit', function(e) {
+            e.preventDefault(); // Impedisce il comportamento predefinito del form
+
+            $.ajax({
+                url: '{% url "acquisti" %}',
+                type: 'POST',
+                data: $(this).serialize(), // Invia i dati del form
+                success: function(response) {
+                    if (response.success) {
+                        $('#message').text(response.message).css('color', 'green');
+                    } else {
+                        $('#message').text(response.message).css('color', 'red');
+                    }
+                },
+                error: function() {
+                    $('#message').text('Si è verificato un errore.').css('color', 'red');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
