@@ -6,7 +6,7 @@
 }
 #back {
     position: absolute; 
-    top: 40px;  
+    top: 30px;  
     left: 200px;  
     height: 100px;
     width: 80px;
@@ -19,7 +19,7 @@
 }
 #cart {
     position: absolute; 
-    top: 40px;  
+    top: 30px;  
     right: 200px;  
     height: 100px;
     width: 80px;
@@ -67,6 +67,11 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-transform: uppercase;
+}
+.box p {
+    margin: 5px 0 0;
+    font-size: 2.5em;
 }
 .highest-bid {
     width: 100%;
@@ -80,10 +85,12 @@
 .highest-bid h2 {
     font-size: 2.2em;
     color: darkgreen;
+    text-transform: uppercase;
+    font-size: 50px;
 }
 
 .highest-bid p {
-    font-size: 5em;
+    font-size: 80px;
     color: darkgreen;
 }
 
@@ -94,10 +101,7 @@
 
 
 
-.box p {
-    margin: 5px 0 0;
-    font-size: 2.5em;
-}
+
 
 .box:hover {
     transform: scale(1.05);
@@ -123,6 +127,20 @@
     .other-bid p {
         font-size: 2em;
     }
+    #back {
+        position: absolute; 
+        height: 70px;
+        width: 30px;
+        top: 20px;
+        left: 30px;
+    }
+    #cart {
+        position: absolute; 
+        height: 70px;
+        width: 30px;
+        top: 20px;
+        right: 30px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -147,5 +165,22 @@
     }
     .other-bid p {
         font-size: 1.8em;
+    }
+    #back {
+        position: absolute; 
+        height: 70px;
+        width: 30px;
+        top: 20px;
+        left: 30px;
+    }
+    #cart {
+        position: absolute; 
+        height: 70px;
+        width: 30px;
+        top: 20px;
+        right: 30px;
+    }
+    h1 {
+        text-align: center;
     }
 }

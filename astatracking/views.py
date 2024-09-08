@@ -264,7 +264,7 @@ def lista_view(request):
         When(ruolo_desc = "Centrocampista", then = 3),
         When(ruolo_desc = "Attaccante",     then = 4),
         default      = 5,
-        output_field = IntegerField
+        output_field = IntegerField()
     )
 
     giocatori = Player_Quotes.objects.all().order_by(order_ruolo, 'nome')
