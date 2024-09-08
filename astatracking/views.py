@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import User, Player_Quotes, Acquisti, AstaOfferte, AstaCorrente
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Sum
+from django.db.models import Sum, Case, When, IntegerField
 
 def login_view(request):
     if request.method == 'POST':
@@ -255,4 +255,34 @@ def admin_offerte(request):
 
 
 
-            
+@login_required
+def lista_view(request):
+
+    order_ruolo = Case(
+        When(ruolo_desc = "Portiere",       then = 1),
+        When(ruolo_desc = "Difensore",      then = 2),
+        When(ruolo_desc = "Centrocampista", then = 3),
+        When(ruolo_desc = "Attaccante",     then = 4),
+        default      = 5,
+        output_field = IntegerField
+    )
+
+    giocatori = Player_Quotes.objects.all().order_by(order_ruolo, 'nome')
+
+    squadre = Player_Quotes.objects.values_list('squadra', flat=True).distinct().order_by('squadra')
+
+    # Filtra per ruolo e squadra se richiesto
+    ruolo_filtro = request.GET.get('ruolo')
+    squadra_filtro = request.GET.get('squadra')
+
+    if ruolo_filtro:
+        giocatori = giocatori.filter(ruolo_desc=ruolo_filtro)
+    if squadra_filtro:
+        giocatori = giocatori.filter(squadra=squadra_filtro)
+
+    context = {
+        'giocatori': giocatori,
+        'squadre': squadre,
+        'ruoli': ['Portiere', 'Difensore', 'Centrocampista', 'Attaccante'],
+    }
+    return render(request, 'lista_giocatori.html', context)
