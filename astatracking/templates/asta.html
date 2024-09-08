@@ -23,35 +23,86 @@
             <div id="giocatore" class="giocatore-scelto">{{ giocatore_scelto }}</div> 
 
             <label for="crediti" id="crediti">Crediti:</label>
-            <input type="number" name="crediti" id="crediti" required />
+            <input type="number" name="crediti" id="crediti-input">
+    <button type="button" id="offerta-button">Offerta</button>
+</div>
 
-            <button type="submit">Offerta</button>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
-            <p id="message"></p> <!-- Per visualizzare il messaggio -->
-        </form>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $('#acquisto-form').on('submit', function(e) {
-            e.preventDefault(); // Impedisce il comportamento predefinito del form
-
-            $.ajax({
-                url: '{% url "acquisti" %}',
-                type: 'POST',
-                data: $(this).serialize(), // Invia i dati del form
-                success: function(response) {
-                    if (response.success) {
-                        $('#message').text(response.message).css('color', 'green');
+    function aggiornaAsta() {
+        $.ajax({
+            url: window.location.href,
+            type: 'GET',
+            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            success: function(data) {
+                if (data.asta_in_corso) {
+                    $('#giocatore').text(data.giocatore_scelto);
+                    if (data.offerta_fatta) {
+                        $('#crediti-input').prop('disabled', true);
+                        $('#offerta-button').prop('disabled', true);
+                        $('#messaggio-offerta').text('Hai già fatto un\'offerta per questo giocatore');
                     } else {
-                        $('#message').text(response.message).css('color', 'red');
+                        $('#crediti-input').prop('disabled', false);
+                        $('#offerta-button').prop('disabled', false);
+                        $('#messaggio-offerta').text('');
+                    }
+                } else {
+                    $('#giocatore').text('Nessuna asta in corso');
+                    $('#crediti-input').prop('disabled', true);
+                    $('#offerta-button').prop('disabled', true);
+                    $('#messaggio-offerta').text('');
+                }
+            }
+        });
+    }
+
+
+    $(document).ready(function() {
+        setInterval(aggiornaAsta, 1000);
+
+        $('#offerta-button').click(function(e) {
+            e.preventDefault();
+            var crediti = $('#crediti-input').val();
+            if (!crediti) {
+                alert('Inserisci un\'offerta valida');
+                return;
+            }
+            $.ajax({
+                url: window.location.href,
+                type: 'POST',
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
+                data: {
+                    'crediti': crediti
+                },
+                success: function(data) {
+                    if (data.success) {
+                        alert(data.message);
+                        $('#crediti-input').val('');
+                    } else {
+                        alert('Errore: ' + data.message);
                     }
                 },
                 error: function() {
-                    $('#message').text('Si è verificato un errore.').css('color', 'red');
+                    alert('Si è verificato un errore durante l\'invio dell\'offerta');
                 }
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

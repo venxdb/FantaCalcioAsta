@@ -133,15 +133,54 @@ def asta_view(request):
     asta_corrente = AstaCorrente.objects.filter(in_corso=True).first()
 
     if request.method == 'POST' and asta_corrente:
-        crediti = request.POST['crediti']
-        AstaOfferte.objects.create(
+        # Verifica se l'utente ha già fatto un'offerta per questa asta
+        offerta_esistente = AstaOfferte.objects.filter(
             allenatore=request.user,
-            giocatore=asta_corrente.giocatore,
-            crediti=crediti
-        )
-        return JsonResponse({'success': True, 'message': 'Offerta inviata con successo'})
-    
-    return render(request, 'asta.html', {'giocatore_scelto': asta_corrente.giocatore if asta_corrente else None})
+            giocatore=asta_corrente.giocatore
+        ).exists()
+
+        if offerta_esistente:
+            return JsonResponse({'success': False, 'message': 'Hai già fatto un\'offerta per questo giocatore'})
+
+        crediti = request.POST.get('crediti')
+        if crediti:
+            try:
+                crediti = int(crediti)
+                AstaOfferte.objects.create(
+                    allenatore=request.user,
+                    giocatore=asta_corrente.giocatore,
+                    crediti=crediti
+                )
+                return JsonResponse({'success': True, 'message': 'Offerta inviata con successo'})
+            except ValueError:
+                return JsonResponse({'success': False, 'message': 'Offerta non valida'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Offerta mancante'})
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        if asta_corrente:
+            # Verifica se l'utente ha già fatto un'offerta
+            offerta_esistente = AstaOfferte.objects.filter(
+                allenatore=request.user,
+                giocatore=asta_corrente.giocatore
+            ).exists()
+
+            return JsonResponse({
+                'giocatore_scelto': asta_corrente.giocatore.nome,
+                'asta_in_corso': True,
+                'offerta_fatta': offerta_esistente
+            })
+        else:
+            return JsonResponse({
+                'giocatore_scelto': None,
+                'asta_in_corso': False,
+                'offerta_fatta': False
+            })
+
+    context = {
+        'giocatore_scelto': asta_corrente.giocatore.nome if asta_corrente else None
+    }
+    return render(request, 'asta.html', context)
 
 
 def admin_asta_view(request):
@@ -151,6 +190,7 @@ def admin_asta_view(request):
             giocatore_scelto = Player_Quotes.objects.get(id=giocatore_id)
 
             # Aggiorna o crea la nuova asta corrente
+            AstaCorrente.objects.all().delete
             AstaCorrente.objects.update_or_create(
                 in_corso=True,
                 defaults={'giocatore': giocatore_scelto}
