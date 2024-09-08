@@ -206,6 +206,9 @@ def admin_offerte(request):
 
     offerte = AstaOfferte.objects.all()
 
+    giocatore_id = AstaOfferte.objects.values('giocatore').distinct().first()['giocatore']
+    giocatore    = Player_Quotes.objects.get(id = giocatore_id).nome
+
     offerte_list = []
     
     for o in offerte:
@@ -246,9 +249,9 @@ def admin_offerte(request):
     # Passa il dizionario ordinato al template
     
     if count_primo_rank == 1:
-        return render(request, 'admin-offerte-singolo.html', {'offerte': offerte_dict})
+        return render(request, 'admin-offerte-singolo.html', {'giocatore_chiamato': giocatore,'offerte': offerte_dict})
     else:
-        return render(request, 'admin-offerte-multiplo.html', {'offerte': offerte_dict})
+        return render(request, 'admin-offerte-multiplo.html', {'giocatore_chiamato': giocatore,'offerte': offerte_dict})
 
 
 

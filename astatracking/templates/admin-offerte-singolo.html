@@ -23,9 +23,9 @@
     </a>
 
     <div id="super-cnt">
-      <h1>Visualizza Offerte</h1>
+      <h1>Visualizza Offerte per {{ giocatore_chiamato }}</h1>
       <div class="container">
-          {% for allenatore, offerte in offerte %}
+          {% for allenatore, offerte in offerte.items %}
               <div class="box {% if offerte.ordine == 1 %}highlight{% endif %}">
                   <h2>{{ allenatore }}</h2>
                   <p>{{ offerte.offerta }}</p>
