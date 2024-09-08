@@ -202,5 +202,54 @@ def admin_asta_view(request):
     return render(request, 'admin-asta.html')
 
 
+def admin_offerte(request):
+
+    offerte = AstaOfferte.objects.all()
+
+    offerte_list = []
+    
+    for o in offerte:
+        # Ottieni l'offerta (crediti)
+        offerta = o.crediti
+        
+        # Ottieni l'allenatore (utente)
+        allenatore = User.objects.get(id=o.allenatore.id)
+        
+        # Aggiungi tuple (allenatore, offerta) alla lista
+        offerte_list.append((allenatore, offerta))
+    
+    # Ordina la lista delle offerte in base ai crediti (offerta) in ordine decrescente
+    offerte_list.sort(key=lambda x: x[1], reverse=True)
+    
+    # Crea un dizionario che mappa ogni allenatore con la sua offerta e il suo ordine
+    offerte_dict = {}
+    current_rank = 1
+    previous_offerta = None
+    count_primo_rank = 0 
+    
+    for idx, (allenatore, offerta) in enumerate(offerte_list):
+        # Se l'offerta è diversa dalla precedente, aggiorna il rank
+        if offerta != previous_offerta:
+            current_rank = idx + 1
+        
+        # Memorizza l'offerta e l'ordine (rank)
+        offerte_dict[allenatore] = {
+            'offerta': offerta,
+            'ordine': current_rank
+        }
+
+        if current_rank == 1:
+            count_primo_rank += 1
+        # Aggiorna l'offerta precedente per il prossimo confronto
+        previous_offerta = offerta
+    
+    # Passa il dizionario ordinato al template
+    
+    if count_primo_rank == 1:
+        return render(request, 'admin-offerte-singolo.html', {'offerte': offerte_dict})
+    else:
+        return render(request, 'admin-offerte-multiplo.html', {'offerte': offerte_dict})
+
+
 
             
