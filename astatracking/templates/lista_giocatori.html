@@ -5,35 +5,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget</title>
-    <link rel="stylesheet" href="{% static 'css/lista_giocatori.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        .filter-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-container .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-container .search-container input {
+            width: 300px;
+            padding: 8px 12px;
+            border: 1px solid #4f545c;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #42454a;
+            color: #c9d1d9;
+            font-size: 25px;
+            margin-right: 40px;
+        }
+
+        .filter-container .search-container input::placeholder {
+            color: #b4b7bb;
+        }
+
+        .filter-container label,
+        .filter-container select,
+        .filter-container button {
+            margin-right: 10px;
+        }
+
+    </style>
+     <link rel="stylesheet" href="{% static 'css/lista_giocatori.css' %}">
 </head>
 <body>
+    <a href="/login/menu">
+        <div id="back-container">
+          <img src="{% static 'img/return_back.svg' %}" alt="back" id="back">
+        </div>
+      </a>
+      <a href="/login/menu/acquisti">
+        <div id="cart-container">
+          <img src="{% static 'img/cart.svg' %}" alt="shop" id="cart">
+        </div>
+      </a>
     <h1>Lista Giocatori</h1>
 
-    <form method="get">
-        <label for="ruolo">Filtra per ruolo:</label>
-        <select name="ruolo" id="ruolo">
-            <option value="">Tutti</option>
-            {% for ruolo in ruoli %}
-                <option value="{{ ruolo }}" {% if ruolo == request.GET.ruolo %}selected{% endif %}>{{ ruolo }}</option>
-            {% endfor %}
-        </select>
+    <div class="filter-container">
+        <form method="get">
+            <label for="ruolo">Filtra per ruolo:</label>
+            <select name="ruolo" id="ruolo">
+                <option value="">Tutti</option>
+                {% for ruolo in ruoli %}
+                    <option value="{{ ruolo }}" {% if ruolo == request.GET.ruolo %}selected{% endif %}>{{ ruolo }}</option>
+                {% endfor %}
+            </select>
 
-        <label for="squadra">Filtra per squadra:</label>
-        <select name="squadra" id="squadra">
-            <option value="">Tutte</option>
-            {% for squadra in squadre %}
-                <option value="{{ squadra }}" {% if squadra == request.GET.squadra %}selected{% endif %}>{{ squadra }}</option>
-            {% endfor %}
-        </select>
+            <label for="squadra">Filtra per squadra:</label>
+            <select name="squadra" id="squadra">
+                <option value="">Tutte</option>
+                {% for squadra in squadre %}
+                    <option value="{{ squadra }}" {% if squadra == request.GET.squadra %}selected{% endif %}>{{ squadra }}</option>
+                {% endfor %}
+            </select>
 
-        <button type="submit">Filtra</button>
-    </form>
+            <button type="submit">Filtra</button>
+        </form>
 
-    <table>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Cerca giocatore..." onkeyup="filterTable()" onfocus="showAllRows()">
+        </div>
+    </div>
+
+    <table id="player-table">
         <thead>
             <tr>
                 <th>Ruolo</th>
@@ -44,7 +96,7 @@
         </thead>
         <tbody>
             {% for giocatore in giocatori %}
-                <tr>
+                <tr {% if giocatore.acquistato %}style="display: none;"{% endif %}>
                     <td>{{ giocatore.ruolo_desc }}</td>
                     <td>{{ giocatore.nome }}</td>
                     <td>{{ giocatore.squadra }}</td>
@@ -53,5 +105,62 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <script>
+   function filterTable() {
+    let input = document.getElementById("search-input");
+    let filter = input.value.toUpperCase();
+    let table = document.getElementById("player-table");
+    let rows = table.getElementsByTagName("tr");
+
+    // Se il campo di ricerca è vuoto, mostra tutte le righe filtrate dai selettori
+    if (filter === "") {
+        showFilteredRows();
+        return;
+    }
+
+    // Se c'è del testo nel campo di ricerca, filtra solo in base a quello
+    for (let i = 1; i < rows.length; i++) { // Inizia da 1 per saltare l'intestazione
+        let nameCell = rows[i].getElementsByTagName("td")[1]; // Colonna nome
+        if (nameCell) {
+            let txtValue = nameCell.textContent || nameCell.innerText;
+            // Mostra solo se il testo del nome contiene il filtro e la riga non è nascosta
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function showFilteredRows() {
+    let table = document.getElementById("player-table");
+    let rows = table.getElementsByTagName("tr");
+
+    // Ottieni i valori selezionati per ruolo e squadra
+    let ruolo = document.getElementById("ruolo").value;
+    let squadra = document.getElementById("squadra").value;
+
+    for (let i = 1; i < rows.length; i++) { // Inizia da 1 per saltare l'intestazione
+        let row = rows[i];
+        let ruoloCell = row.getElementsByTagName("td")[0]; // Colonna ruolo
+        let squadraCell = row.getElementsByTagName("td")[2]; // Colonna squadra
+
+        // Controlla se la riga soddisfa il filtro di ruolo e squadra
+        let matchRuolo = !ruolo || ruoloCell.textContent === ruolo;
+        let matchSquadra = !squadra || squadraCell.textContent === squadra;
+
+        // Mostra la riga solo se soddisfa i filtri di ruolo e squadra
+        if (matchRuolo && matchSquadra) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    }
+}
+
+
+    </script>
 </body>
 </html>

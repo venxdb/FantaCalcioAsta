@@ -7,9 +7,9 @@
 #back {
     position: absolute; 
     top: 30px;  
-    left: 200px;  
+    left: 160px;  
     height: 100px;
-    width: 80px;
+    width: 60px;
 }
 
 #cart-container{
@@ -20,9 +20,9 @@
 #cart {
     position: absolute; 
     top: 30px;  
-    right: 200px;  
+    right: 160px;  
     height: 100px;
-    width: 80px;
+    width: 60px;
 }
 #super-cnt {
     font-family: 'Open-Sans', sans-serif;
@@ -32,10 +32,14 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100vh;
+    max-height: 90vh;
     background-image: url('../img/sports.png')
 }
 
+
+h1 {
+    color: green;
+}
 .container {
     display: flex;
     flex-wrap: wrap;

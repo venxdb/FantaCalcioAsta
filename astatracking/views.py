@@ -255,19 +255,30 @@ def admin_offerte(request):
 
 
 
+from django.db.models import Case, When, IntegerField
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Player_Quotes
+
+from django.db.models import Case, When, IntegerField
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Player_Quotes
+
 @login_required
 def lista_view(request):
 
     order_ruolo = Case(
-        When(ruolo_desc = "Portiere",       then = 1),
-        When(ruolo_desc = "Difensore",      then = 2),
-        When(ruolo_desc = "Centrocampista", then = 3),
-        When(ruolo_desc = "Attaccante",     then = 4),
-        default      = 5,
-        output_field = IntegerField()
+        When(ruolo_desc="Portiere", then=1),
+        When(ruolo_desc="Difensore", then=2),
+        When(ruolo_desc="Centrocampista", then=3),
+        When(ruolo_desc="Attaccante", then=4),
+        default=5,
+        output_field=IntegerField()
     )
 
-    giocatori = Player_Quotes.objects.all().order_by(order_ruolo, 'nome')
+    # Filtra solo i giocatori che non sono stati acquistati (ad esempio, dove non ci sono acquisti associati)
+    giocatori = Player_Quotes.objects.filter(acquisti__isnull=True).order_by(order_ruolo, 'nome')
 
     squadre = Player_Quotes.objects.values_list('squadra', flat=True).distinct().order_by('squadra')
 
@@ -286,3 +297,4 @@ def lista_view(request):
         'ruoli': ['Portiere', 'Difensore', 'Centrocampista', 'Attaccante'],
     }
     return render(request, 'lista_giocatori.html', context)
+

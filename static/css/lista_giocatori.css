@@ -3,6 +3,35 @@ body {
     background-color: #f0f8f0;
     margin: 0;
     padding: 20px;
+    font-size: 20px;
+}
+
+#back-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#back {
+    position: absolute; 
+    top: 4px;  
+    left: 100px;  
+    height: 100px;
+    width: 50px;
+}
+
+#cart-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+#cart {
+    position: absolute; 
+    top: 4px;  
+    right: 100px;  
+    height: 100px;
+    width: 50px;
 }
 
 h1 {
@@ -15,7 +44,10 @@ form {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    font-weight: bold;
+    
 }
 
 label {
@@ -27,6 +59,7 @@ select, button {
     margin-right: 15px;
     border: 1px solid #2c5e2e;
     border-radius: 4px;
+    font-size: 20px;
 }
 
 button {
@@ -44,7 +77,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
@@ -70,23 +103,51 @@ tr:hover {
 @media screen and (max-width: 600px) {
     body {
         padding: 10px;
+        font-size: 18px; 
+    }
+    h1 {
+        font-size: 22px;
+    }
+    .filter-container {
+        flex-direction: column; 
+        align-items: flex-start;
+    }
+
+    .filter-container .search-container input {
+        width: 100%; 
+        margin-right: 0;
+        font-size: 20px; 
+    }
+
+    .filter-container .search-container {
+        width: 100%;
+    }
+
+    .filter-container label,
+    .filter-container select,
+    .filter-container button {
+        margin-bottom: 10px; 
+        margin-right: 0;
     }
 
     form {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        font-size: 15px;
     }
 
     label {
         width: 100%;
         margin-bottom: 5px;
+        font-size: 18px;
     }
 
     select, button {
-        width: calc(50% - 5px);
+        width: calc(40% - 5px);
         margin-right: 0;
         margin-bottom: 10px;
+        font-size: 18px;
     }
 
     button {
@@ -94,7 +155,7 @@ tr:hover {
     }
 
     table {
-        font-size: 14px;
+        font-size: 20px; 
     }
 
     th, td {
@@ -105,10 +166,26 @@ tr:hover {
         font-size: 12px;
     }
 
-    /* Nasconde la colonna della squadra su schermi molto piccoli */
-    @media screen and (max-width: 400px) {
-        td:nth-child(3), th:nth-child(3) {
-            display: none;
-        }
+    #back {
+        left: 30px;
+        width: 30px;
+        top: 0px;
+    }
+
+    #cart {
+        right: 30px;
+        width: 30px;
+        top: 0px;
+    }
+}
+
+
+@media screen and (max-width: 400px) {
+    td:nth-child(3), th:nth-child(3) {
+        display: none;
+    }
+
+    body {
+        font-size: 18px; 
     }
 }
