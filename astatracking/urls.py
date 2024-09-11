@@ -13,5 +13,7 @@ urlpatterns = [
     path('login/menu/asta', views.asta_view, name = "asta"),
     path('login/menu/admin-asta',views.admin_asta_view, name="admin_asta"),
     path('login/menu/admin-asta/offerte',views.admin_offerte, name="admin_asta_offerte"),
+    path('salva-acquisto/', views.salva_acquisto, name='salva_acquisto'),
+
 ]
 

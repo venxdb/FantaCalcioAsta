@@ -7,6 +7,10 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum, Case, When, IntegerField
 
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -298,3 +302,31 @@ def lista_view(request):
     }
     return render(request, 'lista_giocatori.html', context)
 
+@require_POST
+@csrf_exempt
+def salva_acquisto(request):
+    data = json.loads(request.body)
+    giocatore_nome = data.get('giocatore')
+    
+    try:
+        giocatore = Player_Quotes.objects.get(nome=giocatore_nome)
+        offerta_vincente = AstaOfferte.objects.filter(giocatore=giocatore).order_by('-crediti').first()
+        
+        if offerta_vincente:
+            Acquisti.objects.create(
+                allenatore=offerta_vincente.allenatore,
+                giocatore=giocatore,
+                crediti=offerta_vincente.crediti
+            )
+            
+            # Opzionale: elimina tutte le offerte per questo giocatore
+            AstaOfferte.objects.filter(giocatore=giocatore).delete()
+            
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Nessuna offerta trovata per questo giocatore'})
+    
+    except Player_Quotes.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Giocatore non trovato'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})

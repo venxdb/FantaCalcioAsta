@@ -8,30 +8,74 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <a href="/login/menu">
-      <div id="back-container">
-        <img src="{% static 'img/return_back.svg' %}" alt="back" id="back">
-      </div>
+        <div id="back-container">
+            <img src="{% static 'img/return_back.svg' %}" alt="back" id="back">
+        </div>
     </a>
+    <!-- 
     <a href="/login/menu/acquisti">
-      <div id="cart-container">
-        <img src="{% static 'img/cart.svg' %}" alt="shop" id="cart">
-      </div>
-    </a>
+        <div id="cart-container">
+            <img src="{% static 'img/cart.svg' %}" alt="shop" id="cart">
+        </div>
+    </a> 
+    -->
+    <div id="cart-container">
+        <img src="{% static 'img/cart.svg' %}" alt="shop" id="cart" onclick="salvaAcquisto()">
+    </div>
     <div id="super-cnt">
         <h1>Visualizza Offerte per {{ giocatore_chiamato }}</h1>
         <div class="container">
             {% for allenatore, offerte in offerte.items %}
-                <div class="box {% if offerte.ordine == 1 %}highest-bid{% else %}other-bid{% endif %}">
-                    <h2>{{ allenatore }}</h2> 
-                    <p>{{ offerte.offerta }}</p> 
-                </div>
+            <div class="box {% if offerte.ordine == 1 %}highest-bid{% else %}other-bid{% endif %}">
+                <h2>{{ allenatore }}</h2>
+                <p>{{ offerte.offerta }}</p>
+            </div>
             {% endfor %}
         </div>
     </div>
-    
+    <script>
+        function salvaAcquisto() {
+            fetch('/salva-acquisto/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    giocatore: '{{ giocatore_chiamato }}'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Acquisto salvato con successo!');
+                } else {
+                    alert("Errore nel salvare l'acquisto: " + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert("Si è verificato un errore durante il salvataggio dell'acquisto.");
+            });
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 </body>
 </html>
