@@ -9,35 +9,81 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <style>
+        h1{
+            font-size: 50px;
+        }
         .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+           
+        }
+        .highest-offers, .other-offers {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
+            width: 100%;
+        }
+        .highest-offers {
+            margin-bottom: 30px;
         }
         .box {
             text-align: center;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: calc(50% - 15px);
+            min-width: 150px;
+            max-width: 200px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .box h2, .box p {
+            margin: 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .box.highlight {
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bold;
-            border-width: 2px;
-            border-color: #007bff;
+            border-width: 3px;
+            border-color: #00a86b;
+            background-color: #f0fFe0;
+            box-shadow: 0 6px 12px rgba(0,168,107,0.2);
         }
-        .highest-offers {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
+        .box.highlight h2,
+        .box.highlight p {
+            color: #00a86b;
         }
-        .other-offers {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+        .box:not(.highlight) {
+            font-size: 1em;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 600px) {
+            .box {
+                width: 100%;
+                max-width: none;
+                height: auto;
+                max-height: 50px;
+            }
+            .box.highlight {
+                font-size: 0.5em;
+            }
+            .box:not(.highlight) {
+                font-size: 0.4em;
+            }
+            h1 {
+                font-size: 1.5em;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -60,7 +106,7 @@
               {% for allenatore, offerte in offerte.items %}
                   {% if offerte.ordine == 1 %}
                       <div class="box highlight">
-                          <h2>{{ allenatore }}</h2>
+                          <h2 title="{{ allenatore }}">{{ allenatore }}</h2>
                           <p>{{ offerte.offerta }}</p>
                       </div>
                   {% endif %}
@@ -70,7 +116,7 @@
               {% for allenatore, offerte in offerte.items %}
                   {% if offerte.ordine != 1 %}
                       <div class="box">
-                          <h2>{{ allenatore }}</h2>
+                          <h2 title="{{ allenatore }}">{{ allenatore }}</h2>
                           <p>{{ offerte.offerta }}</p>
                       </div>
                   {% endif %}
