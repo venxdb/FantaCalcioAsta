@@ -27,7 +27,7 @@
                     </select>
         
                     <button type="submit">Avvia asta</button>
-                    <button>Mostra offerte</button>
+                    <button type="button" id="mostra-offerte">Mostra offerte</button>
         
                     <p id="message"></p> <!-- Per visualizzare il messaggio -->
                 </form>
@@ -77,31 +77,12 @@
                             }
                         });
                     });
-
                     $('#mostra-offerte').on('click', function(e) {
-                        e.preventDefault(); // Impedisce il comportamento predefinito del bottone
+    e.preventDefault();
+    window.location.href = '{% url "admin_asta_offerte" %}?mostra_offerte=true';
+});
+                   
 
-                        $.ajax({
-                            url: '{% url "admin_asta" %}', // Assicurati che l'URL sia corretto
-                            type: 'GET',
-                            data: {
-                                mostra_offerte: true // Invia una flag per identificare l'azione
-                            },
-                            success: function(response) {
-                                // Assumi che il server ritorni una lista di offerte
-                                var offerte = response.offerte;
-                                var offerteContainer = $('#offerte-container');
-                                offerteContainer.empty(); // Pulisci il contenitore delle offerte
-
-                                offerte.forEach(function(offerta) {
-                                    offerteContainer.append('<p>' + offerta.allenatore + ': ' + offerta.crediti + ' crediti</p>');
-                                });
-                            },
-                            error: function() {
-                                $('#message').text('Si è verificato un errore nel caricamento delle offerte.').css('color', 'red');
-                            }
-                        });
-                    });
                 });
             </script>
         </body>

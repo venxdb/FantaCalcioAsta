@@ -196,59 +196,61 @@ def asta_view(request):
     return render(request, 'asta.html', context)
 
 
+from django.shortcuts import redirect
+
+from django.db import transaction
+
 def admin_asta_view(request):
     if request.method == 'POST':
         if 'giocatore' in request.POST:
             giocatore_id = request.POST['giocatore']
             giocatore_scelto = Player_Quotes.objects.get(id=giocatore_id)
 
-            # Aggiorna o crea la nuova asta corrente
-            AstaCorrente.objects.all().delete
-            AstaCorrente.objects.update_or_create(
-                in_corso=True,
-                defaults={'giocatore': giocatore_scelto}
-            )
+            with transaction.atomic():
+                # Elimina tutte le offerte precedenti
+                AstaOfferte.objects.all().delete()
+
+                # Aggiorna o crea la nuova asta corrente
+                AstaCorrente.objects.all().delete()
+                AstaCorrente.objects.create(
+                    in_corso=True,
+                    giocatore=giocatore_scelto
+                )
+
             return JsonResponse({'success': True, 'message': 'Asta avviata con successo'})
-        elif 'mostra_offerte' in request.POST:
-            offerte = AstaOfferte.objects.all()
-            return render(request, 'admin-asta.html', {'offerte': offerte})
+    elif request.method == 'GET' and 'mostra_offerte' in request.GET:
+        # Reindirizza alla pagina delle offerte
+        return redirect('admin_asta_offerte')
     return render(request, 'admin-asta.html')
 
 
 def admin_offerte(request):
+    asta_corrente = AstaCorrente.objects.filter(in_corso=True).first()
+    if not asta_corrente:
+        return render(request, 'nessuna_asta_in_corso.html')  # Crea questo template
 
-    offerte = AstaOfferte.objects.all()
+    offerte = AstaOfferte.objects.filter(giocatore=asta_corrente.giocatore)
 
-    giocatore_id = AstaOfferte.objects.values('giocatore').distinct().first()['giocatore']
-    giocatore    = Player_Quotes.objects.get(id = giocatore_id).nome
+    giocatore = asta_corrente.giocatore.nome
 
     offerte_list = []
     
     for o in offerte:
-        # Ottieni l'offerta (crediti)
         offerta = o.crediti
-        
-        # Ottieni l'allenatore (utente)
         allenatore = User.objects.get(id=o.allenatore.id)
-        
-        # Aggiungi tuple (allenatore, offerta) alla lista
         offerte_list.append((allenatore, offerta))
     
-    # Ordina la lista delle offerte in base ai crediti (offerta) in ordine decrescente
     offerte_list.sort(key=lambda x: x[1], reverse=True)
     
-    # Crea un dizionario che mappa ogni allenatore con la sua offerta e il suo ordine
     offerte_dict = {}
     current_rank = 1
     previous_offerta = None
     count_primo_rank = 0 
     
     for idx, (allenatore, offerta) in enumerate(offerte_list):
-        # Se l'offerta è diversa dalla precedente, aggiorna il rank
         if offerta != previous_offerta:
             current_rank = idx + 1
         
-        # Memorizza l'offerta e l'ordine (rank)
         offerte_dict[allenatore] = {
             'offerta': offerta,
             'ordine': current_rank
@@ -256,10 +258,7 @@ def admin_offerte(request):
 
         if current_rank == 1:
             count_primo_rank += 1
-        # Aggiorna l'offerta precedente per il prossimo confronto
         previous_offerta = offerta
-    
-    # Passa il dizionario ordinato al template
     
     if count_primo_rank == 1:
         return render(request, 'admin-offerte-singolo.html', {'giocatore_chiamato': giocatore,'offerte': offerte_dict})

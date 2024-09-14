@@ -103,7 +103,7 @@ html, body {
 #back {
     position: absolute; 
     top: 30px;  
-    left: 100px;  
+    left: 50px;  
     height: 70px;
     width: 50px;
 }
@@ -116,7 +116,7 @@ html, body {
 #cart {
     position: absolute; 
     top: 30px;  
-    right: 100px;  
+    right: 50px;  
     height: 70px;
     width: 50px;
 }
